@@ -7,23 +7,69 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <style>
-        :root { --registrar-color: #2563eb; --finance-color: #059669; --dark: #1e293b; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f0f2f5; }
-        .inst-header { background: white; padding: 20px; text-align: center; border-bottom: 3px solid var(--registrar-color); }
-        .inst-header h1 { margin: 0; font-size: 1.5rem; color: var(--dark); font-weight: 800; }
-        nav { background: var(--dark); padding: 10px; display: flex; gap: 10px; justify-content: center; position: sticky; top: 0; z-index: 100; }
-        nav button { background: #475569; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        nav button.active { background: #3b82f6; }
-        .view { display: none; min-height: 80vh; padding: 20px; flex-direction: column; align-items: center; justify-content: center; }
-        .view.active { display: flex; }
-        .card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 450px; }
-        .btn-dept { display: block; width: 100%; padding: 20px; margin: 10px 0; font-size: 1.3rem; font-weight: bold; border: none; border-radius: 12px; cursor: pointer; color: white; }
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; }
-        .digital-ticket { background: white; width: 300px; padding: 30px; border-radius: 15px; text-align: center; border: 5px solid var(--dark); }
-        #monitorView { background: var(--dark); color: white; }
-        .big-num { font-size: 12rem; font-weight: 900; color: #38bdf8; line-height: 1; margin: 20px 0; }
-        .dept-name { font-size: 3rem; text-transform: uppercase; color: #94a3b8; }
-        .staff-box { background: white; padding: 20px; border-radius: 15px; margin: 10px; border-top: 8px solid; width: 300px; text-align: center; }
+        :root { 
+            --registrar-color: #2563eb; 
+            --finance-color: #059669; 
+            --dark: #0f172a; 
+            --card-bg: #1e293b;
+        }
+        
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f8fafc; color: #1e293b; }
+        
+        /* Header & Nav */
+        .inst-header { background: white; padding: 15px; text-align: center; border-bottom: 4px solid var(--registrar-color); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .inst-header h1 { margin: 0; font-size: 1.4rem; color: var(--dark); font-weight: 800; letter-spacing: -0.5px; }
+        
+        nav { background: var(--dark); padding: 12px; display: flex; gap: 10px; justify-content: center; position: sticky; top: 0; z-index: 100; }
+        nav button { background: #334155; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s; }
+        nav button.active { background: #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
+
+        .view { display: none; min-height: 85vh; padding: 20px; box-sizing: border-box; }
+        .view.active { display: flex; flex-direction: column; align-items: center; }
+
+        /* Kiosk View */
+        .card { background: white; padding: 40px; border-radius: 24px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 400px; margin-top: 40px; }
+        .btn-dept { display: block; width: 100%; padding: 25px; margin: 15px 0; font-size: 1.5rem; font-weight: 800; border: none; border-radius: 16px; cursor: pointer; color: white; transition: transform 0.2s; }
+        .btn-dept:active { transform: scale(0.95); }
+
+        /* Modal Ticket */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); z-index: 1000; justify-content: center; align-items: center; }
+        .digital-ticket { background: white; width: 320px; padding: 30px; border-radius: 20px; text-align: center; border: 8px solid var(--dark); position: relative; }
+        .digital-ticket::after { content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 15px solid var(--dark); }
+
+        /* Staff View */
+        .staff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; width: 100%; max-width: 1000px; }
+        .staff-box { background: white; padding: 30px; border-radius: 20px; border-top: 10px solid; box-shadow: 0 10px 15px rgba(0,0,0,0.05); text-align: center; }
+        .wait-count { font-size: 2.5rem; font-weight: 800; margin: 15px 0; color: #64748b; }
+
+        /* ENHANCED MONITOR VIEW */
+        #monitorView { background: var(--dark); color: white; padding: 0; overflow: hidden; justify-content: stretch; }
+        .monitor-container { display: flex; width: 100%; height: 85vh; gap: 10px; padding: 10px; box-sizing: border-box; }
+        
+        .monitor-panel { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            border-radius: 20px; 
+            background: var(--card-bg);
+            border-bottom: 12px solid #000;
+            transition: all 0.5s ease;
+        }
+        .panel-registrar { border-top: 15px solid var(--registrar-color); }
+        .panel-finance { border-top: 15px solid var(--finance-color); }
+        
+        .mon-label { font-size: 2.5rem; font-weight: 800; letter-spacing: 2px; margin-bottom: 10px; }
+        .mon-status { font-size: 1.2rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 4px; }
+        .mon-number { font-size: 11rem; font-weight: 900; line-height: 1; margin: 30px 0; text-shadow: 0 10px 20px rgba(0,0,0,0.3); font-family: 'Courier New', monospace; }
+        
+        .flash-update { animation: flash 1s ease; }
+        @keyframes flash {
+            0% { background: #334155; }
+            50% { background: #475569; }
+            100% { background: var(--card-bg); }
+        }
     </style>
 </head>
 <body>
@@ -33,14 +79,15 @@
 </header>
 
 <nav>
-    <button onclick="showView('kioskView', this)" class="active">Kiosk</button>
-    <button onclick="showView('staffView', this)">Staff Panel</button>
-    <button onclick="showView('monitorView', this)">Monitor Screen</button>
+    <button id="btn-kiosk" onclick="showView('kioskView', this)" class="active">KIOSK</button>
+    <button id="btn-staff" onclick="showView('staffView', this)">STAFF PANEL</button>
+    <button id="btn-monitor" onclick="showView('monitorView', this)">MONITOR SCREEN</button>
 </nav>
 
 <div id="kioskView" class="view active">
     <div class="card">
-        <h2>Select Department</h2>
+        <h2 style="margin-top:0">Get Your Number</h2>
+        <p style="color:#64748b">Please select a department</p>
         <button class="btn-dept" style="background:var(--registrar-color)" onclick="generateTicket('REGISTRAR', 'R')">REGISTRAR</button>
         <button class="btn-dept" style="background:var(--finance-color)" onclick="generateTicket('FINANCE', 'F')">FINANCE</button>
     </div>
@@ -48,51 +95,65 @@
 
 <div id="ticketModal" class="modal-overlay">
     <div class="digital-ticket">
-        <div id="p-dept" style="font-weight:bold; color:#64748b">DEPT</div>
-        <div class="big-num" id="p-num" style="font-size:4rem; color:var(--dark)">---</div>
-        <div style="background:#fee2e2; color:#dc2626; padding:10px; border-radius:8px; font-weight:bold;">TAKE A PHOTO</div>
-        <button onclick="closeTicket()" style="margin-top:20px; padding:10px; width:100%">DONE</button>
+        <div id="p-dept" style="font-weight:800; color:#64748b; font-size: 1.2rem;">DEPARTMENT</div>
+        <div id="p-num" style="font-size:6rem; font-weight:900; color:var(--dark); margin: 10px 0;">---</div>
+        <div style="background:#fef2f2; color:#ef4444; padding:15px; border-radius:12px; font-weight:bold; border: 2px dashed #f87171;">
+            📸 PLEASE TAKE A PHOTO
+        </div>
+        <button onclick="closeTicket()" style="margin-top:25px; padding:15px; width:100%; border-radius:10px; border:none; background:var(--dark); color:white; font-weight:bold; cursor:pointer;">DONE</button>
     </div>
 </div>
 
 <div id="staffView" class="view">
-    <div style="display:flex; flex-wrap:wrap; justify-content:center;">
+    <div class="staff-grid">
         <div class="staff-box" style="border-color: var(--registrar-color);">
-            <h3>REGISTRAR</h3>
-            <div id="wait-REGISTRAR">Waiting: 0</div>
+            <h2 style="color:var(--registrar-color)">REGISTRAR</h2>
+            <div class="wait-count" id="wait-REGISTRAR">0</div>
+            <div style="color:#94a3b8; margin-bottom: 20px;">Students Waiting</div>
             <button class="btn-dept" style="background:var(--registrar-color)" onclick="callNext('REGISTRAR')">CALL NEXT</button>
         </div>
         <div class="staff-box" style="border-color: var(--finance-color);">
-            <h3>FINANCE</h3>
-            <div id="wait-FINANCE">Waiting: 0</div>
+            <h2 style="color:var(--finance-color)">FINANCE</h2>
+            <div class="wait-count" id="wait-FINANCE">0</div>
+            <div style="color:#94a3b8; margin-bottom: 20px;">Students Waiting</div>
             <button class="btn-dept" style="background:var(--finance-color)" onclick="callNext('FINANCE')">CALL NEXT</button>
         </div>
     </div>
 </div>
 
 <div id="monitorView" class="view">
-    <div class="dept-name" id="mon-dept">Lobby</div>
-    <div class="big-num" id="mon-num">---</div>
-    <div class="dept-name" style="font-size: 2rem;">Now Serving</div>
+    <div class="monitor-container">
+        <div id="panel-REGISTRAR" class="monitor-panel panel-registrar">
+            <div class="mon-label" style="color: var(--registrar-color);">REGISTRAR</div>
+            <div class="mon-status">Now Serving</div>
+            <div class="mon-number" id="mon-num-REGISTRAR" style="color: #38bdf8;">---</div>
+        </div>
+
+        <div id="panel-FINANCE" class="monitor-panel panel-finance">
+            <div class="mon-label" style="color: var(--finance-color);">FINANCE</div>
+            <div class="mon-status">Now Serving</div>
+            <div class="mon-number" id="mon-num-FINANCE" style="color: #4ade80;">---</div>
+        </div>
+    </div>
 </div>
 
 <script>
-    // --- PASTE YOUR FIREBASE CONFIG HERE ---
- const firebaseConfig = {
-  apiKey: "AIzaSyDrySDxpUqTMAzom9o1B3ZaGkL__2kx19A",
-  authDomain: "ark-queue-system.firebaseapp.com",
-  databaseURL: "https://ark-queue-system-default-rtdb.firebaseio.com",
-  projectId: "ark-queue-system",
-  storageBucket: "ark-queue-system.firebasestorage.app",
-  messagingSenderId: "1087161355859",
-  appId: "1:1087161355859:web:f17ab0505bc100d0f440a6",
-  measurementId: "G-XXEPW2FK59"
-};
-    // ---------------------------------------
+    // --- FIREBASE CONFIGURATION ---
+    const firebaseConfig = {
+        apiKey: "AIzaSyDrySDxpUqTMAzom9o1B3ZaGkL__2kx19A",
+        authDomain: "ark-queue-system.firebaseapp.com",
+        databaseURL: "https://ark-queue-system-default-rtdb.firebaseio.com",
+        projectId: "ark-queue-system",
+        storageBucket: "ark-queue-system.firebasestorage.app",
+        messagingSenderId: "1087161355859",
+        appId: "1:1087161355859:web:f17ab0505bc100d0f440a6",
+        measurementId: "G-XXEPW2FK59"
+    };
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
+    // UI Navigation
     function showView(viewId, btn) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
@@ -100,15 +161,16 @@
         btn.classList.add('active');
     }
 
-    // Kiosk Logic: Push to Firebase
+    // Kiosk: Generate Ticket
     async function generateTicket(dept, prefix) {
         const snapshot = await db.ref('last_' + dept).get();
         let lastNum = snapshot.val() || 0;
         lastNum++;
+        
         const ticket = prefix + lastNum.toString().padStart(3, '0');
         
-        db.ref('last_' + dept).set(lastNum);
-        db.ref('waiting_' + dept).push(ticket);
+        await db.ref('last_' + dept).set(lastNum);
+        await db.ref('waiting_' + dept).push(ticket);
 
         document.getElementById('p-dept').innerText = dept;
         document.getElementById('p-num').innerText = ticket;
@@ -117,41 +179,60 @@
 
     function closeTicket() { document.getElementById('ticketModal').style.display = 'none'; }
 
-    // Staff Logic: Pull from Firebase
+    // Staff: Call Next Student
     async function callNext(dept) {
         const snapshot = await db.ref('waiting_' + dept).limitToFirst(1).get();
         if(snapshot.exists()) {
             const key = Object.keys(snapshot.val())[0];
             const nextTicket = snapshot.val()[key];
             
-            db.ref('waiting_' + dept + '/' + key).remove();
-            db.ref('currentCall').set({ ticket: nextTicket, dept: dept, time: Date.now() });
+            await db.ref('waiting_' + dept + '/' + key).remove();
+            // Update current call with timestamp for the announcer
+            await db.ref('currentCall').set({ 
+                ticket: nextTicket, 
+                dept: dept, 
+                time: Date.now() 
+            });
         } else {
-            alert("No one in line!");
+            alert("Queue is empty for " + dept);
         }
     }
 
-    // Real-time Listeners
+    // MONITOR LOGIC: Real-time Listeners
     db.ref('currentCall').on('value', (snapshot) => {
         const data = snapshot.val();
         if(data) {
-            document.getElementById('mon-num').innerText = data.ticket;
-            document.getElementById('mon-dept').innerText = data.dept;
-            // Only speak if this is a fresh update
-            if (Date.now() - data.time < 2000) announce(data.ticket, data.dept);
+            const numElement = document.getElementById('mon-num-' + data.dept);
+            const panelElement = document.getElementById('panel-' + data.dept);
+            
+            if(numElement) {
+                numElement.innerText = data.ticket;
+                
+                // Visual Highlight effect
+                panelElement.classList.add('flash-update');
+                setTimeout(() => panelElement.classList.remove('flash-update'), 1000);
+            }
+            
+            // Voice Announcement (only if triggered in last 2 seconds)
+            if (Date.now() - data.time < 2000) {
+                announce(data.ticket, data.dept);
+            }
         }
     });
 
+    // Staff View: Update Waiting Counts
     ['REGISTRAR', 'FINANCE'].forEach(dept => {
         db.ref('waiting_' + dept).on('value', (snapshot) => {
             const count = snapshot.numChildren();
-            document.getElementById('wait-' + dept).innerText = "Waiting: " + count;
+            document.getElementById('wait-' + dept).innerText = count;
         });
     });
 
     function announce(num, dept) {
         window.speechSynthesis.cancel();
-        const msg = new SpeechSynthesisUtterance(`Now serving, ticket number ${num}, proceed to ${dept}`);
+        const msg = new SpeechSynthesisUtterance(`Ticket number ${num}, please proceed to the ${dept} department.`);
+        msg.rate = 0.9;
+        msg.pitch = 1;
         window.speechSynthesis.speak(msg);
     }
 </script>
