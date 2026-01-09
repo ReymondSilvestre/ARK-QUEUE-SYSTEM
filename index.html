@@ -15,19 +15,6 @@
         }
         
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #000; color: #fff; overflow: hidden; }
-        
-        /* VIDEO AD OVERLAY (Front Layer) */
-        #videoAdOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #000;
-            z-index: 9999; 
-            display: none; 
-        }
-        #adVideo { width: 100%; height: 100%; object-fit: cover; }
 
         /* HEADER */
         .inst-header { 
@@ -71,12 +58,6 @@
 </head>
 <body>
 
-<div id="videoAdOverlay">
-    <video id="adVideo" muted playsinline>
-        <source src="videos/MAKERTING2023.MP4" type="video/mp4">
-    </video>
-</div>
-
 <header class="inst-header">
     <img src="images/logo.png" alt="ARK Logo" class="school-logo">
     <h1>ARK Technological Institute Education System Inc.</h1>
@@ -89,7 +70,6 @@
     <button onclick="showView('kioskView')">KIOSK</button>
     <button onclick="showView('staffView')">STAFF PANEL</button>
     <button onclick="showView('monitorView')" class="active">MONITOR</button>
-    <button onclick="resetSystem()" style="background:#f59e0b">RESET</button>
 </nav>
 
 <div id="kioskView" class="view">
@@ -110,12 +90,12 @@
         <div style="flex:1; padding:40px; text-align:center;">
             <div id="ws-REGISTRAR" class="dept-ws">
                 <h2>Registrar Counter</h2>
-                <div id="current-name-REGISTRAR">---</div>
+                <div id="current-name-REGISTRAR" style="font-size: 2rem; margin: 20px 0;">---</div>
                 <button class="call-btn" style="background:var(--registrar-color)" onclick="callNext('REGISTRAR')">CALL NEXT</button>
             </div>
             <div id="ws-FINANCE" class="dept-ws" style="display:none;">
                 <h2>Finance Counter</h2>
-                <div id="current-name-FINANCE">---</div>
+                <div id="current-name-FINANCE" style="font-size: 2rem; margin: 20px 0;">---</div>
                 <button class="call-btn" style="background:var(--finance-color)" onclick="callNext('FINANCE')">CALL NEXT</button>
             </div>
         </div>
@@ -164,51 +144,6 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // --- ENHANCED VIDEO LOGIC ---
-    let idleTimer;
-    const AD_VIDEO = document.getElementById('adVideo');
-    const AD_OVERLAY = document.getElementById('videoAdOverlay');
-    
-    // List your 3 videos here
-    const videoPlaylist = [
-        "videos/MAKERTING2023.MP4",
-        "videos/video2.MP4", // Update with your actual file names
-        "videos/video3.MP4"
-    ];
-    let currentVideoIndex = 0;
-
-    // Listen for when the current video ends to play the next one
-    AD_VIDEO.onended = function() {
-        currentVideoIndex++;
-        if (currentVideoIndex >= videoPlaylist.length) {
-            currentVideoIndex = 0; // Restart from first video
-        }
-        playCurrentVideo();
-    };
-
-    function playCurrentVideo() {
-        AD_VIDEO.src = videoPlaylist[currentVideoIndex];
-        AD_VIDEO.play();
-    }
-
-    function showAd() {
-        AD_OVERLAY.style.display = 'block';
-        playCurrentVideo();
-    }
-
-    function hideAd() {
-        AD_OVERLAY.style.display = 'none';
-        AD_VIDEO.pause();
-        resetIdleTimer();
-    }
-
-    function resetIdleTimer() {
-        clearTimeout(idleTimer);
-        // Returns to videos after 20 seconds of no calls
-        idleTimer = setTimeout(showAd, 20000); 
-    }
-    // ----------------------------
-
     async function callNext(dept) {
         const snap = await db.ref('waiting_' + dept).limitToFirst(1).get();
         if(snap.exists()) {
@@ -222,10 +157,13 @@
     db.ref('currentCall').on('value', (snap) => {
         const data = snap.val();
         if(data && data.dept !== "NONE") {
-            hideAd(); // Hide video playlist immediately when calling
             document.getElementById('mon-num-' + data.dept).innerText = data.ticket;
             document.getElementById('mon-name-' + data.dept).innerText = data.name;
             
+            // Updates staff view current name
+            const staffNameEl = document.getElementById('current-name-' + data.dept);
+            if(staffNameEl) staffNameEl.innerText = data.name + " (" + data.ticket + ")";
+
             if (Date.now() - data.time < 2000) {
                 window.speechSynthesis.cancel();
                 const msg = new SpeechSynthesisUtterance(`Now serving, ${data.name}, ticket ${data.ticket}`);
@@ -238,25 +176,23 @@
         db.ref('waiting_' + dept).on('value', (snap) => {
             const listEl = document.getElementById('next-list-' + dept);
             listEl.innerHTML = "";
-            let i = 0;
             snap.forEach(child => {
-                if(i < 4) {
-                    const row = child.val();
-                    const div = document.createElement('div');
-                    div.className = 'waiting-row';
-                    div.innerHTML = `<span style="text-transform:capitalize">${row.name}</span><span class="wait-ticket">${row.ticket}</span>`;
-                    listEl.appendChild(div);
-                }
-                i++;
+                const row = child.val();
+                const div = document.createElement('div');
+                div.className = 'waiting-row';
+                div.innerHTML = `<span style="text-transform:capitalize">${row.name}</span><span class="wait-ticket">${row.ticket}</span>`;
+                listEl.appendChild(div);
             });
         });
     });
 
     function unlockMenu() { if(prompt("Pass:") === "admin123") document.getElementById('mainNav').classList.add('show-menu'); }
+    
     function showView(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById(id).classList.add('active');
     }
+
     function switchDept(dept) {
         document.querySelectorAll('.dept-ws').forEach(d => d.style.display = 'none');
         document.getElementById('ws-' + dept).style.display = 'block';
@@ -271,8 +207,6 @@
         await db.ref('waiting_' + dept).push({ ticket: prefix + num.toString().padStart(3, '0'), name: name });
         document.getElementById('studentName').value = "";
     }
-
-    resetIdleTimer();
 </script>
 </body>
 </html>
