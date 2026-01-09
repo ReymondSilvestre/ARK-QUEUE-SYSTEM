@@ -191,7 +191,7 @@
     const db = firebase.database();
 
     function unlockMenu() { 
-        if(prompt("Enter Admin Password:") === "admin123") {
+        if(prompt("Enter Admin Password:") === "") {
             document.getElementById('mainNav').classList.add('show-menu');
         } 
     }
@@ -296,3 +296,4 @@
 </script>
 </body>
 </html>
+
