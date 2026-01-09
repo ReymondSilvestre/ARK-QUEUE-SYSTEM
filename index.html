@@ -11,163 +11,145 @@
             --registrar-color: #2563eb; 
             --finance-color: #059669; 
             --dark: #0f172a; 
-            --card-bg: #1e293b;
-            --text-muted: #94a3b8;
+            --card-bg: rgba(30, 41, 59, 0.95);
         }
         
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f8fafc; color: #1e293b; overflow-x: hidden; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #000; color: #fff; overflow: hidden; }
         
-        /* Header */
-        .inst-header { 
-            background: white; padding: 15px 20px; border-bottom: 4px solid var(--registrar-color); 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; text-align: center;
+        /* VIDEO AD OVERLAY (Front Layer) */
+        #videoAdOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            z-index: 9999; 
+            display: none; 
         }
-        .school-logo { height: 70px; width: auto; margin-bottom: 5px; object-fit: contain; }
-        .inst-header h1 { margin: 0; font-size: 1.1rem; color: var(--dark); font-weight: 800; text-transform: uppercase; }
-        .header-right { position: absolute; right: 20px; top: 20px; }
-        .admin-icon { cursor: pointer; width: 24px; height: 24px; fill: #cbd5e1; transition: 0.3s; }
+        #adVideo { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Navigation */
-        nav { background: var(--dark); padding: 10px; display: none; gap: 10px; justify-content: center; position: sticky; top: 0; z-index: 100; }
+        /* HEADER */
+        .inst-header { 
+            background: white; padding: 10px 20px; border-bottom: 4px solid var(--registrar-color); 
+            display: flex; flex-direction: column; align-items: center; position: relative;
+        }
+        .school-logo { height: 50px; margin-bottom: 2px; }
+        .inst-header h1 { margin: 0; font-size: 0.9rem; color: var(--dark); text-transform: uppercase; }
+        .header-right { position: absolute; right: 20px; top: 15px; }
+        .admin-icon { cursor: pointer; width: 20px; fill: #cbd5e1; }
+
+        /* NAV */
+        nav { background: var(--dark); padding: 10px; display: none; gap: 10px; justify-content: center; }
         nav.show-menu { display: flex; }
-        nav button { background: #334155; color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 600; }
-        nav button.active { background: #3b82f6; }
+        nav button { background: #334155; color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; }
 
         .view { display: none; min-height: 85vh; padding: 20px; box-sizing: border-box; }
         .view.active { display: flex; flex-direction: column; align-items: center; }
 
-        /* KIOSK STYLES */
-        .kiosk-card { background: white; padding: 40px; border-radius: 24px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 500px; }
-        .name-input { 
-            width: 100%; padding: 15px; font-size: 1.2rem; border: 2px solid #e2e8f0; border-radius: 12px; 
-            margin-bottom: 25px; box-sizing: border-box; text-align: center; font-weight: 600;
+        /* MONITOR UI */
+        .monitor-container { display: flex; width: 100%; height: 80vh; gap: 20px; margin-top: 20px; }
+        .monitor-panel { 
+            flex: 1; display: flex; flex-direction: column; border-radius: 30px; 
+            background: var(--card-bg); border: 1px solid rgba(255,255,255,0.1); overflow: hidden;
         }
-
-        /* STAFF PANEL STYLES */
-        .staff-container { display: flex; width: 100%; max-width: 1100px; background: white; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; min-height: 550px; }
-        .staff-sidebar { width: 250px; background: #f1f5f9; border-right: 1px solid #e2e8f0; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
-        .side-btn { display: flex; align-items: center; gap: 12px; padding: 15px; border: none; border-radius: 12px; background: white; font-weight: 700; cursor: pointer; transition: 0.3s; text-align: left;}
-        .side-btn.active-dept { background: var(--dark); color: white; }
-        .staff-content { flex: 1; padding: 40px; display: flex; justify-content: center; align-items: center; }
-        .dept-workspace { display: none; width: 100%; text-align: center; flex-direction: column; align-items: center; }
-        .dept-workspace.active-ws { display: flex; }
-        .call-btn { width: 250px; height: 250px; border-radius: 50%; border: 8px solid #f1f5f9; color: white; font-size: 1.5rem; font-weight: 900; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.3s; }
-
-        /* MONITOR STYLES */
-        .monitor-container { display: flex; width: 100%; height: 90vh; gap: 15px; padding: 15px; box-sizing: border-box; background: var(--dark); }
-        .monitor-panel { flex: 1; display: flex; flex-direction: column; border-radius: 24px; background: var(--card-bg); overflow: hidden; border: 1px solid #334155; }
-        .mon-number { font-size: 8rem; font-weight: 900; margin: 10px 0; font-family: 'Courier New', monospace; line-height: 1; }
-        .mon-name { font-size: 2.2rem; color: #f8fafc; font-weight: 600; text-transform: capitalize; margin-bottom: 10px; }
+        .mon-number { font-size: 10rem; font-weight: 900; font-family: monospace; color: #38bdf8; margin: 0; }
+        .mon-name { font-size: 2.5rem; font-weight: 600; text-transform: capitalize; color: #fff; }
         
+        .waiting-list { flex: 1.5; padding: 20px; background: rgba(0,0,0,0.3); }
         .waiting-row {
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(51, 65, 85, 0.4); padding: 10px 15px; border-radius: 8px; margin-bottom: 8px;
+            display: flex; justify-content: space-between; padding: 12px; 
+            background: rgba(255,255,255,0.05); border-radius: 12px; margin-bottom: 8px;
         }
-        .wait-ticket { font-weight: 800; color: #38bdf8; font-family: monospace; font-size: 1.3rem; }
-        .wait-name { color: #cbd5e1; font-size: 1.1rem; text-transform: capitalize; }
+        .wait-ticket { font-weight: 800; color: #38bdf8; font-size: 1.4rem; }
 
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); z-index: 1000; justify-content: center; align-items: center; }
-        .digital-ticket { background: white; width: 320px; padding: 30px; border-radius: 20px; text-align: center; border: 8px solid var(--dark); }
+        /* KIOSK/STAFF */
+        .kiosk-card { background: white; padding: 40px; border-radius: 24px; color: var(--dark); text-align: center; }
+        .name-input { width: 100%; padding: 15px; font-size: 1.2rem; border-radius: 12px; border: 2px solid #ddd; margin-bottom: 20px; text-align: center; }
+        .call-btn { width: 200px; height: 200px; border-radius: 50%; color: white; font-weight: 900; cursor: pointer; border: 8px solid #f1f5f9; }
     </style>
 </head>
 <body>
+
+<div id="videoAdOverlay">
+    <video id="adVideo" muted playsinline>
+        <source src="videos/MAKERTING2023.MP4" type="video/mp4">
+    </video>
+</div>
 
 <header class="inst-header">
     <img src="images/logo.png" alt="ARK Logo" class="school-logo">
     <h1>ARK Technological Institute Education System Inc.</h1>
     <div class="header-right">
-        <svg class="admin-icon" onclick="unlockMenu()" viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/><path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clip-rule="evenodd"/></svg>
+        <svg class="admin-icon" onclick="unlockMenu()" viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/><path d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"/></svg>
     </div>
 </header>
 
 <nav id="mainNav">
-    <button onclick="showView('kioskView', this)" class="active">KIOSK</button>
-    <button onclick="showView('staffView', this)">STAFF PANEL</button>
-    <button onclick="showView('monitorView', this)">MONITOR</button>
-    <button onclick="resetSystem()" style="background:#f59e0b">RESET SYSTEM</button>
-    <button onclick="lockMenu()" style="background:#be123c">HIDE MENU</button>
+    <button onclick="showView('kioskView')">KIOSK</button>
+    <button onclick="showView('staffView')">STAFF PANEL</button>
+    <button onclick="showView('monitorView')" class="active">MONITOR</button>
+    <button onclick="resetSystem()" style="background:#f59e0b">RESET</button>
 </nav>
 
-<div id="kioskView" class="view active">
+<div id="kioskView" class="view">
     <div class="kiosk-card">
-        <h2 style="margin:0 0 20px 0; color: var(--dark);">Queue Registration</h2>
-        <p style="text-align: left; font-weight: bold; color: #475569; margin-bottom: 8px;">Enter Your Full Name:</p>
-        <input type="text" id="studentName" class="name-input" placeholder="Type your name here..." autocomplete="off">
-        
-        <p style="color:#64748b; margin-bottom: 20px;">Choose Department:</p>
-        <button onclick="generateTicket('REGISTRAR', 'R')" style="background:var(--registrar-color); width:100%; padding:20px; color:white; border:none; border-radius:15px; font-size:1.3rem; font-weight:800; cursor:pointer; margin-bottom:15px;">REGISTRAR</button>
-        <button onclick="generateTicket('FINANCE', 'F')" style="background:var(--finance-color); width:100%; padding:20px; color:white; border:none; border-radius:15px; font-size:1.3rem; font-weight:800; cursor:pointer;">FINANCE</button>
+        <h2>Queue Registration</h2>
+        <input type="text" id="studentName" class="name-input" placeholder="Enter Full Name">
+        <button onclick="generateTicket('REGISTRAR', 'R')" style="background:var(--registrar-color); width:100%; padding:20px; color:white; border:none; border-radius:15px; cursor:pointer;">REGISTRAR</button>
+        <button onclick="generateTicket('FINANCE', 'F')" style="background:var(--finance-color); width:100%; padding:20px; color:white; border:none; border-radius:15px; cursor:pointer; margin-top:10px;">FINANCE</button>
     </div>
 </div>
 
 <div id="staffView" class="view">
-    <div class="staff-container">
-        <div class="staff-sidebar">
-            <h3 style="font-size:0.75rem; color:#64748b; text-transform:uppercase; letter-spacing:1px;">Departments</h3>
-            <button class="side-btn active-dept" onclick="switchDept('REGISTRAR', this)">REGISTRAR</button>
-            <button class="side-btn" onclick="switchDept('FINANCE', this)">FINANCE</button>
+    <div style="display:flex; width:100%; max-width:900px; background:white; color:#000; border-radius:20px; overflow:hidden;">
+        <div style="width:200px; background:#f1f5f9; padding:20px;">
+            <button onclick="switchDept('REGISTRAR')" style="width:100%; padding:10px; margin-bottom:10px;">REGISTRAR</button>
+            <button onclick="switchDept('FINANCE')" style="width:100%; padding:10px;">FINANCE</button>
         </div>
-        <div class="staff-content">
-            <div id="ws-REGISTRAR" class="dept-workspace active-ws">
-                <h2 style="color:var(--registrar-color); margin-bottom:5px;">Registrar Counter</h2>
-                <div id="current-name-REGISTRAR" style="margin-bottom:20px; font-weight:bold; font-size:1.4rem; color:#1e293b; min-height:1.5em;">---</div>
+        <div style="flex:1; padding:40px; text-align:center;">
+            <div id="ws-REGISTRAR" class="dept-ws">
+                <h2>Registrar Counter</h2>
+                <div id="current-name-REGISTRAR">---</div>
                 <button class="call-btn" style="background:var(--registrar-color)" onclick="callNext('REGISTRAR')">CALL NEXT</button>
-                <div style="margin-top:20px; font-weight:700;">Waiting in Line: <span id="wait-REGISTRAR">0</span></div>
             </div>
-            <div id="ws-FINANCE" class="dept-workspace">
-                <h2 style="color:var(--finance-color); margin-bottom:5px;">Finance Counter</h2>
-                <div id="current-name-FINANCE" style="margin-bottom:20px; font-weight:bold; font-size:1.4rem; color:#1e293b; min-height:1.5em;">---</div>
+            <div id="ws-FINANCE" class="dept-ws" style="display:none;">
+                <h2>Finance Counter</h2>
+                <div id="current-name-FINANCE">---</div>
                 <button class="call-btn" style="background:var(--finance-color)" onclick="callNext('FINANCE')">CALL NEXT</button>
-                <div style="margin-top:20px; font-weight:700;">Waiting in Line: <span id="wait-FINANCE">0</span></div>
             </div>
         </div>
     </div>
 </div>
 
-<div id="monitorView" class="view" style="padding:0; background:var(--dark);">
+<div id="monitorView" class="view active">
     <div class="monitor-container">
-        
-        <div id="panel-REGISTRAR" class="monitor-panel">
-            <div style="flex:3; display:flex; flex-direction:column; justify-content:center; align-items:center; border-bottom: 2px solid rgba(255,255,255,0.05);">
-                <div style="font-size:1.5rem; font-weight:800; color:var(--registrar-color); letter-spacing: 2px;">REGISTRAR</div>
-                <div style="color: var(--text-muted); text-transform: uppercase; font-size: 0.9rem; margin-top: 10px;">Now Serving</div>
-                <div class="mon-number" id="mon-num-REGISTRAR" style="color:#38bdf8">---</div>
-                <div class="mon-name" id="mon-name-REGISTRAR">Ready to Serve</div>
+        <div class="monitor-panel">
+            <div style="flex:3; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                <div style="color:var(--registrar-color); font-weight:800;">REGISTRAR</div>
+                <div class="mon-number" id="mon-num-REGISTRAR">---</div>
+                <div class="mon-name" id="mon-name-REGISTRAR">Welcome</div>
             </div>
-            <div style="flex:1.8; padding:20px; background: rgba(0,0,0,0.2);">
-                <div style="font-size:0.9rem; color:#64748b; font-weight:800; text-align:center; margin-bottom:15px; border-bottom: 1px solid #334155;">NEXT IN LINE</div>
+            <div class="waiting-list">
+                <div style="text-align:center; color:#94a3b8; font-size:0.8rem; margin-bottom:10px;">NEXT IN LINE</div>
                 <div id="next-list-REGISTRAR"></div>
             </div>
         </div>
-
-        <div id="panel-FINANCE" class="monitor-panel">
-            <div style="flex:3; display:flex; flex-direction:column; justify-content:center; align-items:center; border-bottom: 2px solid rgba(255,255,255,0.05);">
-                <div style="font-size:1.5rem; font-weight:800; color:var(--finance-color); letter-spacing: 2px;">FINANCE</div>
-                <div style="color: var(--text-muted); text-transform: uppercase; font-size: 0.9rem; margin-top: 10px;">Now Serving</div>
+        <div class="monitor-panel">
+            <div style="flex:3; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                <div style="color:var(--finance-color); font-weight:800;">FINANCE</div>
                 <div class="mon-number" id="mon-num-FINANCE" style="color:#4ade80">---</div>
-                <div class="mon-name" id="mon-name-FINANCE">Ready to Serve</div>
+                <div class="mon-name" id="mon-name-FINANCE">Welcome</div>
             </div>
-            <div style="flex:1.8; padding:20px; background: rgba(0,0,0,0.2);">
-                <div style="font-size:0.9rem; color:#64748b; font-weight:800; text-align:center; margin-bottom:15px; border-bottom: 1px solid #334155;">NEXT IN LINE</div>
+            <div class="waiting-list">
+                <div style="text-align:center; color:#94a3b8; font-size:0.8rem; margin-bottom:10px;">NEXT IN LINE</div>
                 <div id="next-list-FINANCE"></div>
             </div>
         </div>
-
-    </div>
-</div>
-
-<div id="ticketModal" class="modal-overlay">
-    <div class="digital-ticket">
-        <div id="p-name-modal" style="font-weight:800; color:var(--registrar-color); font-size: 1.3rem; margin-bottom:10px;">NAME</div>
-        <div id="p-num" style="font-size:5rem; font-weight:900; line-height:1; margin-bottom:10px;">---</div>
-        <div id="p-dept" style="color:#64748b; font-weight:700; letter-spacing:1px; margin-bottom:20px;">DEPARTMENT</div>
-        <div style="background:#fef2f2; color:#ef4444; padding:10px; border-radius:8px; font-weight:bold; border: 2px dashed #f87171; margin-bottom:20px;">📸 PLEASE TAKE A PHOTO</div>
-        <button onclick="closeTicket()" style="width:100%; padding:15px; background:var(--dark); color:white; border:none; border-radius:10px; cursor:pointer; font-weight:bold;">DONE</button>
     </div>
 </div>
 
 <script>
-    // --- FIREBASE CONFIG ---
     const firebaseConfig = {
         apiKey: "AIzaSyDrySDxpUqTMAzom9o1B3ZaGkL__2kx19A",
         authDomain: "ark-queue-system.firebaseapp.com",
@@ -182,48 +164,50 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // --- UI CONTROLS ---
-    function unlockMenu() {
-        const pw = prompt("Enter Admin Password:");
-        if(pw === "admin123") document.getElementById('mainNav').classList.add('show-menu');
-    }
-    function lockMenu() { document.getElementById('mainNav').classList.remove('show-menu'); }
+    // --- ENHANCED VIDEO LOGIC ---
+    let idleTimer;
+    const AD_VIDEO = document.getElementById('adVideo');
+    const AD_OVERLAY = document.getElementById('videoAdOverlay');
+    
+    // List your 3 videos here
+    const videoPlaylist = [
+        "videos/MAKERTING2023.MP4",
+        "videos/video2.MP4", // Update with your actual file names
+        "videos/video3.MP4"
+    ];
+    let currentVideoIndex = 0;
 
-    function showView(id, btn) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        btn.classList.add('active');
-    }
+    // Listen for when the current video ends to play the next one
+    AD_VIDEO.onended = function() {
+        currentVideoIndex++;
+        if (currentVideoIndex >= videoPlaylist.length) {
+            currentVideoIndex = 0; // Restart from first video
+        }
+        playCurrentVideo();
+    };
 
-    function switchDept(dept, btn) {
-        document.querySelectorAll('.dept-workspace').forEach(ws => ws.classList.remove('active-ws'));
-        document.querySelectorAll('.side-btn').forEach(b => b.classList.remove('active-dept'));
-        document.getElementById('ws-' + dept).classList.add('active-ws');
-        btn.classList.add('active-dept');
-    }
-
-    // --- QUEUE LOGIC ---
-    async function generateTicket(dept, prefix) {
-        const nameInput = document.getElementById('studentName');
-        const name = nameInput.value.trim();
-        if(!name) { alert("Please enter your name first!"); return; }
-
-        const snap = await db.ref('last_' + dept).get();
-        let num = (snap.val() || 0) + 1;
-        const ticket = prefix + num.toString().padStart(3, '0');
-        
-        await db.ref('last_' + dept).set(num);
-        await db.ref('waiting_' + dept).push({ ticket: ticket, name: name });
-        
-        document.getElementById('p-name-modal').innerText = name;
-        document.getElementById('p-dept').innerText = dept;
-        document.getElementById('p-num').innerText = ticket;
-        document.getElementById('ticketModal').style.display = 'flex';
-        nameInput.value = ""; 
+    function playCurrentVideo() {
+        AD_VIDEO.src = videoPlaylist[currentVideoIndex];
+        AD_VIDEO.play();
     }
 
-    function closeTicket() { document.getElementById('ticketModal').style.display = 'none'; }
+    function showAd() {
+        AD_OVERLAY.style.display = 'block';
+        playCurrentVideo();
+    }
+
+    function hideAd() {
+        AD_OVERLAY.style.display = 'none';
+        AD_VIDEO.pause();
+        resetIdleTimer();
+    }
+
+    function resetIdleTimer() {
+        clearTimeout(idleTimer);
+        // Returns to videos after 20 seconds of no calls
+        idleTimer = setTimeout(showAd, 20000); 
+    }
+    // ----------------------------
 
     async function callNext(dept) {
         const snap = await db.ref('waiting_' + dept).limitToFirst(1).get();
@@ -232,25 +216,19 @@
             const data = snap.val()[key];
             await db.ref('waiting_' + dept + '/' + key).remove();
             await db.ref('currentCall').set({ ticket: data.ticket, name: data.name, dept: dept, time: Date.now() });
-        } else { alert("No one is in line!"); }
+        }
     }
 
-    // --- DATA SYNC ---
     db.ref('currentCall').on('value', (snap) => {
         const data = snap.val();
         if(data && data.dept !== "NONE") {
-            // Update Monitor
+            hideAd(); // Hide video playlist immediately when calling
             document.getElementById('mon-num-' + data.dept).innerText = data.ticket;
             document.getElementById('mon-name-' + data.dept).innerText = data.name;
             
-            // Update Staff Status
-            const staffNameDisplay = document.getElementById('current-name-' + data.dept);
-            if(staffNameDisplay) staffNameDisplay.innerText = "Currently Serving: " + data.name;
-
-            // Audio Announcement
             if (Date.now() - data.time < 2000) {
                 window.speechSynthesis.cancel();
-                const msg = new SpeechSynthesisUtterance(`Now serving, ${data.name}, ticket number ${data.ticket}. Please proceed to the ${data.dept} department.`);
+                const msg = new SpeechSynthesisUtterance(`Now serving, ${data.name}, ticket ${data.ticket}`);
                 window.speechSynthesis.speak(msg);
             }
         }
@@ -258,39 +236,43 @@
 
     ['REGISTRAR', 'FINANCE'].forEach(dept => {
         db.ref('waiting_' + dept).on('value', (snap) => {
-            // Update counts for staff
-            document.getElementById('wait-' + dept).innerText = snap.numChildren() || 0;
-            
-            // Update Monitor "Next in Line" List
             const listEl = document.getElementById('next-list-' + dept);
             listEl.innerHTML = "";
             let i = 0;
             snap.forEach(child => {
-                if(i < 5) {
+                if(i < 4) {
                     const row = child.val();
                     const div = document.createElement('div');
                     div.className = 'waiting-row';
-                    div.innerHTML = `<span class="wait-name">${row.name}</span><span class="wait-ticket">${row.ticket}</span>`;
+                    div.innerHTML = `<span style="text-transform:capitalize">${row.name}</span><span class="wait-ticket">${row.ticket}</span>`;
                     listEl.appendChild(div);
                 }
                 i++;
             });
-            if(i === 0) listEl.innerHTML = "<div style='text-align:center; color:#475569; font-style:italic;'>No one waiting</div>";
         });
     });
 
-    async function resetSystem() {
-        if(confirm("DANGER: This will reset all numbers to 0 and clear all lines. Continue?")) {
-            await db.ref('/').update({ 
-                last_REGISTRAR: 0, 
-                last_FINANCE: 0, 
-                waiting_REGISTRAR: null, 
-                waiting_FINANCE: null, 
-                currentCall: { ticket: "---", name: "Ready to Serve", dept: "NONE", time: 0 }
-            });
-            location.reload();
-        }
+    function unlockMenu() { if(prompt("Pass:") === "admin123") document.getElementById('mainNav').classList.add('show-menu'); }
+    function showView(id) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
     }
+    function switchDept(dept) {
+        document.querySelectorAll('.dept-ws').forEach(d => d.style.display = 'none');
+        document.getElementById('ws-' + dept).style.display = 'block';
+    }
+
+    async function generateTicket(dept, prefix) {
+        const name = document.getElementById('studentName').value.trim();
+        if(!name) return alert("Enter Name");
+        const snap = await db.ref('last_' + dept).get();
+        let num = (snap.val() || 0) + 1;
+        await db.ref('last_' + dept).set(num);
+        await db.ref('waiting_' + dept).push({ ticket: prefix + num.toString().padStart(3, '0'), name: name });
+        document.getElementById('studentName').value = "";
+    }
+
+    resetIdleTimer();
 </script>
 </body>
 </html>
