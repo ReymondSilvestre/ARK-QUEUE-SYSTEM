@@ -31,19 +31,23 @@
             overflow-x: hidden;
         }
 
-        /* --- RESPONSIVE FULL SCREEN VIDEO --- */
+        /* --- ENHANCED RESPONSIVE FULL SCREEN VIDEO --- */
         #screensaver-container {
             position: fixed;
-            inset: 0;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
             z-index: 9999;
             background: #000;
             transition: opacity 0.8s ease, visibility 0.8s;
             visibility: hidden;
             opacity: 0;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
         }
         
         #screensaver-container.active {
@@ -52,11 +56,11 @@
         }
 
         #screensaver-container video {
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: cover;
+            /* This ensures the video fills the screen on any device ratio */
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Crops edges slightly to fill screen without stretching */
+            object-position: center;
         }
 
         /* HEADER */
