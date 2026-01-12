@@ -40,7 +40,7 @@
             height: 100vh;
             height: 100dvh;
             z-index: 9999;
-            background: #000;
+            background: #000; /* Ensures blank spaces are black */
             transition: opacity 0.8s ease, visibility 0.8s;
             visibility: hidden;
             opacity: 0;
@@ -56,10 +56,10 @@
         }
 
         #screensaver-container video {
-            /* This ensures the video fills the screen on any device ratio */
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Crops edges slightly to fill screen without stretching */
+            /* Default for large screens: Fill the area */
+            object-fit: cover; 
             object-position: center;
         }
 
@@ -164,7 +164,15 @@
         .modal-content { background: white; padding: 2rem; border-radius: 28px; text-align: center; width: 100%; max-width: 400px; }
         .modal-ticket { font-size: 5rem; font-weight: 900; color: var(--registrar-color); margin: 10px 0; }
 
-        /* --- MEDIA QUERIES FOR LARGER DEVICES --- */
+        /* --- MEDIA QUERIES --- */
+        
+        /* Mobile Specific: Show full video with blank spaces */
+        @media (max-width: 767px) {
+            #screensaver-container video {
+                object-fit: contain; /* Shows full video frame on small devices */
+            }
+        }
+
         @media (min-width: 768px) {
             .inst-header { padding: 1.5rem; }
             .school-logo { height: 70px; }
