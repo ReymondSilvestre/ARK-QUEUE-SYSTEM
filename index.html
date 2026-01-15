@@ -178,6 +178,20 @@
         .modal-content { background: white; padding: 2rem; border-radius: 28px; text-align: center; width: 100%; max-width: 400px; }
         .modal-ticket { font-size: 5rem; font-weight: 900; color: var(--registrar-color); margin: 10px 0; }
 
+        /* VOICE CONTROL BUTTON */
+        #voiceToggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border: 2px solid var(--registrar-color);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10001;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
         /* --- MEDIA QUERIES --- */
         @media (max-width: 767px) {
             #screensaver-container video {
@@ -204,6 +218,12 @@
     </style>
 </head>
 <body>
+
+<button id="voiceToggle" onclick="enableAudio()" title="Enable Voice Announcements">
+    <svg id="voiceIcon" viewBox="0 0 24 24" width="24" height="24" fill="#2563eb">
+        <path d="M3.63 3.63L2.22 5.04L7 9.83V19H11L16 24V18.83L18.96 21.79C18.36 22.25 17.7 22.62 17 22.88V24.93C18.25 24.62 19.39 24.03 20.39 23.21L22.22 25.04L23.63 23.63L3.63 3.63M14 16.83L9.17 12H9V17H11.83L14 19.17V16.83M12 4L9.91 6.09L12 8.18V4M16 15V13C16 11.1 14.9 9.4 13.3 8.6L14.7 10C15.5 10.6 16 11.7 16 13V15M19 13C19 10.3 17.5 8 15.3 6.9L16.7 8.3C18.1 9.2 19 10.9 19 13V15.2L20.4 16.6C20.8 15.5 21 14.3 21 13V13.13C21 13.09 21 13.04 21 13Z"/>
+    </svg>
+</button>
 
 <div id="screensaver-container">
     <video id="idleVideo" muted loop playsinline>
@@ -307,6 +327,20 @@
     const db = firebase.database();
     let screensaverTimer;
     let currentActiveView = 'monitorView';
+    let audioEnabled = false;
+
+    // AUDIO PERMISSION HANDLER
+    function enableAudio() {
+        audioEnabled = true;
+        document.getElementById('voiceIcon').innerHTML = '<path d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.85 14,18.71V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16.02C15.5,15.29 16.5,13.77 16.5,12M3,9V15H7L12,20V4L7,9H3Z"/>';
+        document.getElementById('voiceToggle').style.borderColor = "#059669";
+        
+        // Play a silent beep to "warm up" the audio engine
+        const msg = new SpeechSynthesisUtterance("");
+        window.speechSynthesis.speak(msg);
+        
+        alert("Voice announcements enabled for this screen.");
+    }
 
     function unlockMenu() { 
         if(prompt("Admin Password:") === "") {
@@ -371,11 +405,13 @@
             const staffDisplay = document.getElementById('current-name-' + data.dept);
             if(staffDisplay) staffDisplay.innerText = `${data.name} (${data.ticket})`;
 
-            // Voice trigger check (within 3 seconds of update)
-            if (Date.now() - data.time < 3000) {
+            // Voice trigger (broadcast to all connected devices)
+            if (Date.now() - data.time < 5000) {
                 window.speechSynthesis.cancel();
-                const msg = new SpeechSynthesisUtterance(`Now serving ${data.name}. Ticket ${data.ticket}`);
+                const text = `Now serving ${data.name}. Ticket ${data.ticket}. Please proceed to ${data.dept}.`;
+                const msg = new SpeechSynthesisUtterance(text);
                 msg.rate = 0.85;
+                msg.pitch = 1;
                 window.speechSynthesis.speak(msg);
             }
         }
@@ -416,11 +452,9 @@
     async function repeatCall(dept) {
         const snap = await db.ref('currentCall').get();
         const data = snap.val();
-        
-        // Only repeat if there is a current call and it belongs to this department
         if(data && data.dept === dept && data.ticket !== "---") {
             await db.ref('currentCall').update({
-                time: Date.now() // Updating time triggers the listener and voice
+                time: Date.now() 
             });
         } else {
             alert("No active ticket to repeat for this department.");
