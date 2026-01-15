@@ -148,8 +148,8 @@
 
         /* KIOSK STYLES */
         .kiosk-card { background: white; padding: 2rem; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); width: 100%; max-width: 500px; text-align: center; }
-        .name-input { width: 100%; padding: 1.2rem; font-size: 1.2rem; border-radius: 12px; border: 2px solid #e2e8f0; margin-bottom: 1.5rem; text-align: center; outline-color: var(--registrar-color);[...]
-        .btn-reg { background: var(--registrar-color); color: white; width: 100%; padding: 1.5rem; border: none; border-radius: 15px; font-weight: 900; font-size: 1.3rem; cursor: pointer; margin-botto[...]
+        .name-input { width: 100%; padding: 1.2rem; font-size: 1.2rem; border-radius: 12px; border: 2px solid #e2e8f0; margin-bottom: 1.5rem; text-align: center; outline-color: var(--registrar-color); }
+        .btn-reg { background: var(--registrar-color); color: white; width: 100%; padding: 1.5rem; border: none; border-radius: 15px; font-weight: 900; font-size: 1.3rem; cursor: pointer; margin-bottom: 1rem; }
         .btn-fin { background: var(--finance-color); color: white; width: 100%; padding: 1.5rem; border: none; border-radius: 15px; font-weight: 900; font-size: 1.3rem; cursor: pointer; }
 
         /* STAFF PANEL */
@@ -158,11 +158,6 @@
         .staff-sidebar button { flex: 1; padding: 1.2rem; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .staff-sidebar button.active-dept { background: white; color: var(--registrar-color); box-shadow: inset 0 -4px 0 var(--registrar-color); }
         .call-btn { width: 180px; height: 180px; border-radius: 50%; color: white; border: 10px solid #f1f5f9; font-size: 1.2rem; font-weight: 900; cursor: pointer; transition: transform 0.2s; }
-
-        /* Repeat call button styles */
-        .repeat-btn { margin-top: 12px; padding: 12px 18px; border-radius: 12px; border: none; font-weight: 900; cursor: pointer; color: white; }
-        .repeat-btn.reg { background: var(--registrar-color); }
-        .repeat-btn.fin { background: var(--finance-color); }
 
         /* MODAL */
         #ticketModal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
@@ -210,7 +205,7 @@
         <div class="modal-ticket" id="displayTicket">---</div>
         <div class="modal-name" id="displayName" style="font-weight: bold; font-size: 1.4rem;">---</div>
         <p style="color: #64748b;">Please take a photo of your ticket.</p>
-        <button onclick="closeModal()" style="background:var(--dark); color:white; border:none; padding:15px; border-radius:12px; font-weight:bold; width: 100%; cursor: pointer; font-size: 1.1rem;">OK[...]
+        <button onclick="closeModal()" style="background:var(--dark); color:white; border:none; padding:15px; border-radius:12px; font-weight:bold; width: 100%; cursor: pointer; font-size: 1.1rem;">OK, GOT IT</button>
     </div>
 </div>
 
@@ -219,7 +214,7 @@
     <h1>ARK Technological Institute <br> Education System Inc.</h1>
     <div class="header-right" style="position: absolute; right: 20px; top: 20px;">
         <svg class="admin-icon" style="width:24px; cursor:pointer; fill:#cbd5e1;" onclick="unlockMenu()" viewBox="0 0 24 24">
-            <path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/><path d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.6[...]
+            <path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/><path d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"/>
         </svg>
     </div>
 </header>
@@ -252,14 +247,12 @@
                 <p>Waiting: <b id="count-REGISTRAR">0</b></p>
                 <div id="current-name-REGISTRAR" style="margin: 20px 0; font-weight: bold; font-size: 1.4rem; background: #f8fafc; padding: 10px; border-radius: 10px;">---</div>
                 <button class="call-btn" style="background:var(--registrar-color)" onclick="callNext('REGISTRAR')">CALL NEXT</button>
-                <button class="repeat-btn reg" onclick="repeatCall('REGISTRAR')" title="Repeat last call for Registrar">REPEAT CALL</button>
             </div>
             <div id="ws-FINANCE" class="dept-ws" style="display:none;">
                 <h2 style="color:var(--finance-color);">Finance Counter</h2>
                 <p>Waiting: <b id="count-FINANCE">0</b></p>
                 <div id="current-name-FINANCE" style="margin: 20px 0; font-weight: bold; font-size: 1.4rem; background: #f8fafc; padding: 10px; border-radius: 10px;">---</div>
                 <button class="call-btn" style="background:var(--finance-color)" onclick="callNext('FINANCE')">CALL NEXT</button>
-                <button class="repeat-btn fin" onclick="repeatCall('FINANCE')" title="Repeat last call for Finance">REPEAT CALL</button>
             </div>
         </div>
     </div>
@@ -432,35 +425,6 @@
 
     function closeModal() {
         document.getElementById('ticketModal').style.display = 'none';
-    }
-
-    // New: Repeat last call for a department.
-    // This updates only the time on currentCall so listeners re-trigger the announcement.
-    async function repeatCall(dept) {
-        try {
-            const snap = await db.ref('currentCall').get();
-            if(!snap.exists()) {
-                alert('No active call to repeat.');
-                return;
-            }
-            const data = snap.val();
-            if(!data.dept || data.dept === 'NONE') {
-                alert('No active call to repeat.');
-                return;
-            }
-            if(data.dept !== dept) {
-                alert(`The active call is for ${data.dept}. Switch to that department or call next for ${dept}.`);
-                return;
-            }
-            // Update only the time so the monitor's listener re-announces.
-            await db.ref('currentCall').update({ time: Date.now() });
-            // Ensure monitor is visible and awake
-            toggleScreensaver(false);
-            resetIdleTimer();
-        } catch (err) {
-            console.error('repeatCall error', err);
-            alert('Failed to repeat call. See console for details.');
-        }
     }
 
     window.onload = () => {
