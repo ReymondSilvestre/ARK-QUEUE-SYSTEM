@@ -40,7 +40,7 @@
             height: 100vh;
             height: 100dvh;
             z-index: 9999;
-            background: #000; /* Ensures blank spaces are black */
+            background: #000; 
             transition: opacity 0.8s ease, visibility 0.8s;
             visibility: hidden;
             opacity: 0;
@@ -58,7 +58,6 @@
         #screensaver-container video {
             width: 100%;
             height: 100%;
-            /* Default for large screens: Fill the area */
             object-fit: cover; 
             object-position: center;
         }
@@ -158,6 +157,21 @@
         .staff-sidebar button { flex: 1; padding: 1.2rem; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .staff-sidebar button.active-dept { background: white; color: var(--registrar-color); box-shadow: inset 0 -4px 0 var(--registrar-color); }
         .call-btn { width: 180px; height: 180px; border-radius: 50%; color: white; border: 10px solid #f1f5f9; font-size: 1.2rem; font-weight: 900; cursor: pointer; transition: transform 0.2s; }
+        
+        .repeat-btn { 
+            margin-top: 20px;
+            background: #64748b; 
+            color: white; 
+            border: none; 
+            padding: 12px 25px; 
+            border-radius: 12px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.2s;
+        }
+        .repeat-btn:hover { background: #475569; }
 
         /* MODAL */
         #ticketModal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
@@ -165,11 +179,9 @@
         .modal-ticket { font-size: 5rem; font-weight: 900; color: var(--registrar-color); margin: 10px 0; }
 
         /* --- MEDIA QUERIES --- */
-        
-        /* Mobile Specific: Show full video with blank spaces */
         @media (max-width: 767px) {
             #screensaver-container video {
-                object-fit: contain; /* Shows full video frame on small devices */
+                object-fit: contain; 
             }
         }
 
@@ -247,12 +259,16 @@
                 <p>Waiting: <b id="count-REGISTRAR">0</b></p>
                 <div id="current-name-REGISTRAR" style="margin: 20px 0; font-weight: bold; font-size: 1.4rem; background: #f8fafc; padding: 10px; border-radius: 10px;">---</div>
                 <button class="call-btn" style="background:var(--registrar-color)" onclick="callNext('REGISTRAR')">CALL NEXT</button>
+                <br>
+                <button class="repeat-btn" onclick="repeatCall('REGISTRAR')">Repeat Call</button>
             </div>
             <div id="ws-FINANCE" class="dept-ws" style="display:none;">
                 <h2 style="color:var(--finance-color);">Finance Counter</h2>
                 <p>Waiting: <b id="count-FINANCE">0</b></p>
                 <div id="current-name-FINANCE" style="margin: 20px 0; font-weight: bold; font-size: 1.4rem; background: #f8fafc; padding: 10px; border-radius: 10px;">---</div>
                 <button class="call-btn" style="background:var(--finance-color)" onclick="callNext('FINANCE')">CALL NEXT</button>
+                <br>
+                <button class="repeat-btn" onclick="repeatCall('FINANCE')">Repeat Call</button>
             </div>
         </div>
     </div>
@@ -355,6 +371,7 @@
             const staffDisplay = document.getElementById('current-name-' + data.dept);
             if(staffDisplay) staffDisplay.innerText = `${data.name} (${data.ticket})`;
 
+            // Voice trigger check (within 3 seconds of update)
             if (Date.now() - data.time < 3000) {
                 window.speechSynthesis.cancel();
                 const msg = new SpeechSynthesisUtterance(`Now serving ${data.name}. Ticket ${data.ticket}`);
@@ -393,6 +410,20 @@
             await db.ref('currentCall').set({ ticket: data.ticket, name: data.name, dept: dept, time: Date.now() });
         } else {
             alert("No students in queue.");
+        }
+    }
+
+    async function repeatCall(dept) {
+        const snap = await db.ref('currentCall').get();
+        const data = snap.val();
+        
+        // Only repeat if there is a current call and it belongs to this department
+        if(data && data.dept === dept && data.ticket !== "---") {
+            await db.ref('currentCall').update({
+                time: Date.now() // Updating time triggers the listener and voice
+            });
+        } else {
+            alert("No active ticket to repeat for this department.");
         }
     }
 
