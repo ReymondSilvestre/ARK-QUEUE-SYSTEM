@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARK Wireless Queue System</title>
+    <title>ARK Wireless Queue System - Enhanced</title>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <style>
@@ -31,7 +31,6 @@
             overflow-x: hidden;
         }
 
-        /* --- ENHANCED RESPONSIVE FULL SCREEN VIDEO --- */
         #screensaver-container {
             position: fixed;
             top: 0;
@@ -62,7 +61,6 @@
             object-position: center;
         }
 
-        /* HEADER */
         .inst-header { 
             background: white; 
             padding: 1rem; 
@@ -85,7 +83,6 @@
             line-height: 1.2;
         }
 
-        /* NAVIGATION - Admin Only */
         nav { 
             background: var(--dark); 
             padding: 8px; 
@@ -107,11 +104,9 @@
             font-weight: bold; 
         }
 
-        /* VIEW CONTAINER */
         .view { display: none; padding: 1rem; width: 100%; flex: 1; }
         .view.active { display: flex; flex-direction: column; align-items: center; }
 
-        /* MONITOR UI */
         .monitor-container { 
             display: grid;
             grid-template-columns: 1fr;
@@ -145,13 +140,11 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.03);
         }
 
-        /* KIOSK STYLES */
         .kiosk-card { background: white; padding: 2rem; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); width: 100%; max-width: 500px; text-align: center; }
         .name-input { width: 100%; padding: 1.2rem; font-size: 1.2rem; border-radius: 12px; border: 2px solid #e2e8f0; margin-bottom: 1.5rem; text-align: center; outline-color: var(--registrar-color); }
         .btn-reg { background: var(--registrar-color); color: white; width: 100%; padding: 1.5rem; border: none; border-radius: 15px; font-weight: 900; font-size: 1.3rem; cursor: pointer; margin-bottom: 1rem; }
         .btn-fin { background: var(--finance-color); color: white; width: 100%; padding: 1.5rem; border: none; border-radius: 15px; font-weight: 900; font-size: 1.3rem; cursor: pointer; }
 
-        /* STAFF PANEL */
         .staff-container { display: flex; flex-direction: column; width: 100%; max-width: 900px; background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .staff-sidebar { display: flex; background: #f1f5f9; }
         .staff-sidebar button { flex: 1; padding: 1.2rem; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
@@ -173,30 +166,42 @@
         }
         .repeat-btn:hover { background: #475569; }
 
-        /* MODAL */
         #ticketModal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
         .modal-content { background: white; padding: 2rem; border-radius: 28px; text-align: center; width: 100%; max-width: 400px; }
         .modal-ticket { font-size: 5rem; font-weight: 900; color: var(--registrar-color); margin: 10px 0; }
 
-        /* VOICE CONTROL BUTTON */
-        #voiceToggle {
+        #voiceStatus {
             position: fixed;
             bottom: 20px;
             right: 20px;
             background: white;
-            border: 2px solid var(--registrar-color);
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
+            border: 3px solid #10b981;
+            padding: 12px 20px;
+            border-radius: 25px;
             z-index: 10001;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            display: none;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            color: #10b981;
         }
 
-        /* --- MEDIA QUERIES --- */
+        .pulse-dot {
+            width: 12px;
+            height: 12px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
         @media (max-width: 767px) {
-            #screensaver-container video {
-                object-fit: contain; 
-            }
+            #screensaver-container video { object-fit: contain; }
         }
 
         @media (min-width: 768px) {
@@ -219,11 +224,10 @@
 </head>
 <body>
 
-<button id="voiceToggle" onclick="enableAudio()" title="Enable Voice Announcements">
-    <svg id="voiceIcon" viewBox="0 0 24 24" width="24" height="24" fill="#2563eb">
-        <path d="M3.63 3.63L2.22 5.04L7 9.83V19H11L16 24V18.83L18.96 21.79C18.36 22.25 17.7 22.62 17 22.88V24.93C18.25 24.62 19.39 24.03 20.39 23.21L22.22 25.04L23.63 23.63L3.63 3.63M14 16.83L9.17 12H9V17H11.83L14 19.17V16.83M12 4L9.91 6.09L12 8.18V4M16 15V13C16 11.1 14.9 9.4 13.3 8.6L14.7 10C15.5 10.6 16 11.7 16 13V15M19 13C19 10.3 17.5 8 15.3 6.9L16.7 8.3C18.1 9.2 19 10.9 19 13V15.2L20.4 16.6C20.8 15.5 21 14.3 21 13V13.13C21 13.09 21 13.04 21 13Z"/>
-    </svg>
-</button>
+<div id="voiceStatus">
+    <div class="pulse-dot"></div>
+    <span>VOICE READY</span>
+</div>
 
 <div id="screensaver-container">
     <video id="idleVideo" muted loop playsinline>
@@ -327,19 +331,46 @@
     const db = firebase.database();
     let screensaverTimer;
     let currentActiveView = 'monitorView';
-    let audioEnabled = false;
+    let audioInitialized = false;
+    let lastAnnouncedCallId = null;
 
-    // AUDIO PERMISSION HANDLER
-    function enableAudio() {
-        audioEnabled = true;
-        document.getElementById('voiceIcon').innerHTML = '<path d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.85 14,18.71V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16.02C15.5,15.29 16.5,13.77 16.5,12M3,9V15H7L12,20V4L7,9H3Z"/>';
-        document.getElementById('voiceToggle').style.borderColor = "#059669";
+    function initAudioOnMonitor() {
+        if (currentActiveView === 'monitorView' && !audioInitialized) {
+            const warmup = new SpeechSynthesisUtterance("");
+            window.speechSynthesis.speak(warmup);
+            audioInitialized = true;
+            document.getElementById('voiceStatus').style.display = 'flex';
+            console.log("✅ Voice system initialized for monitor screen");
+        }
+    }
+
+    function announceTicket(ticket, name, dept, callId) {
+        if (currentActiveView !== 'monitorView' || callId === lastAnnouncedCallId) {
+            return;
+        }
         
-        // Play a silent beep to "warm up" the audio engine
-        const msg = new SpeechSynthesisUtterance("");
-        window.speechSynthesis.speak(msg);
+        lastAnnouncedCallId = callId;
+        window.speechSynthesis.cancel();
         
-        alert("Voice announcements enabled for this screen.");
+        const text = `Now serving ${name}. Ticket ${ticket}. Please proceed to ${dept}.`;
+        
+        setTimeout(() => {
+            const msg1 = new SpeechSynthesisUtterance(text);
+            msg1.rate = 0.85;
+            msg1.pitch = 1;
+            msg1.volume = 1;
+            window.speechSynthesis.speak(msg1);
+            
+            msg1.onend = () => {
+                setTimeout(() => {
+                    const msg2 = new SpeechSynthesisUtterance(text);
+                    msg2.rate = 0.85;
+                    msg2.pitch = 1;
+                    msg2.volume = 1;
+                    window.speechSynthesis.speak(msg2);
+                }, 3000);
+            };
+        }, 500);
     }
 
     function unlockMenu() { 
@@ -353,10 +384,13 @@
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById(id).classList.add('active');
         document.getElementById('mainNav').classList.remove('show-menu');
-        if(id !== 'monitorView') {
-            toggleScreensaver(false);
-        } else {
+        
+        if(id === 'monitorView') {
+            initAudioOnMonitor();
             resetIdleTimer();
+        } else {
+            toggleScreensaver(false);
+            document.getElementById('voiceStatus').style.display = 'none';
         }
     }
 
@@ -365,7 +399,7 @@
             await db.ref('/').update({
                 'last_REGISTRAR': 0, 'last_FINANCE': 0,
                 'waiting_REGISTRAR': null, 'waiting_FINANCE': null,
-                'currentCall': { ticket: '---', name: 'Welcome', dept: 'NONE', time: 0 }
+                'currentCall': { ticket: '---', name: 'Welcome', dept: 'NONE', time: 0, callId: '' }
             });
             location.reload();
         }
@@ -390,7 +424,6 @@
         }, 25000); 
     }
 
-    // Database Listeners
     db.ref('currentCall').on('value', (snap) => {
         const data = snap.val();
         if(data && data.dept !== "NONE") {
@@ -405,14 +438,8 @@
             const staffDisplay = document.getElementById('current-name-' + data.dept);
             if(staffDisplay) staffDisplay.innerText = `${data.name} (${data.ticket})`;
 
-            // Voice trigger (broadcast to all connected devices)
-            if (Date.now() - data.time < 5000) {
-                window.speechSynthesis.cancel();
-                const text = `Now serving ${data.name}. Ticket ${data.ticket}. Please proceed to ${data.dept}.`;
-                const msg = new SpeechSynthesisUtterance(text);
-                msg.rate = 0.85;
-                msg.pitch = 1;
-                window.speechSynthesis.speak(msg);
+            if (data.callId && Date.now() - data.time < 5000) {
+                announceTicket(data.ticket, data.name, data.dept, data.callId);
             }
         }
     });
@@ -443,7 +470,16 @@
             const key = Object.keys(snap.val())[0];
             const data = snap.val()[key];
             await db.ref('waiting_' + dept + '/' + key).remove();
-            await db.ref('currentCall').set({ ticket: data.ticket, name: data.name, dept: dept, time: Date.now() });
+            
+            const callId = Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+            
+            await db.ref('currentCall').set({ 
+                ticket: data.ticket, 
+                name: data.name, 
+                dept: dept, 
+                time: Date.now(),
+                callId: callId
+            });
         } else {
             alert("No students in queue.");
         }
@@ -453,8 +489,11 @@
         const snap = await db.ref('currentCall').get();
         const data = snap.val();
         if(data && data.dept === dept && data.ticket !== "---") {
+            const callId = Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+            
             await db.ref('currentCall').update({
-                time: Date.now() 
+                time: Date.now(),
+                callId: callId
             });
         } else {
             alert("No active ticket to repeat for this department.");
@@ -493,8 +532,17 @@
     }
 
     window.onload = () => {
-        if(currentActiveView === 'monitorView') resetIdleTimer();
+        if(currentActiveView === 'monitorView') {
+            resetIdleTimer();
+            setTimeout(initAudioOnMonitor, 1000);
+        }
     }
+
+    document.addEventListener('click', () => {
+        if (currentActiveView === 'monitorView' && !audioInitialized) {
+            initAudioOnMonitor();
+        }
+    }, { once: true });
 </script>
 </body>
 </html>
