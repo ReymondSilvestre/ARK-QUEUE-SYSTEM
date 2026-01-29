@@ -341,7 +341,7 @@
     const slideshowImages = [
         'images/image1.jpg',
         'images/image2.jpg',
-        'imageslogo.png',
+        'images/logo.png',
 
         // Add more image paths as needed
     ];
@@ -357,6 +357,7 @@
         slideshowImages.forEach((imgPath, index) => {
             const img = document.createElement('img');
             img.src = imgPath;
+
             img.alt = `Slide ${index + 1}`;
             if (index === 0) img.classList.add('active-slide');
             container.appendChild(img);
@@ -610,4 +611,5 @@
 </script>
 </body>
 </html>
+
 
