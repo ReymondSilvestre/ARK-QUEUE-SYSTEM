@@ -54,11 +54,20 @@
             opacity: 1;
         }
 
-        #screensaver-container video {
+        #screensaver-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover; 
+            object-fit: contain; 
             object-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        #screensaver-container img.active-slide {
+            opacity: 1;
         }
 
         .inst-header { 
@@ -200,10 +209,6 @@
             50% { opacity: 0.5; transform: scale(1.2); }
         }
 
-        @media (max-width: 767px) {
-            #screensaver-container video { object-fit: contain; }
-        }
-
         @media (min-width: 768px) {
             .inst-header { padding: 1.5rem; }
             .school-logo { height: 70px; }
@@ -230,9 +235,7 @@
 </div>
 
 <div id="screensaver-container">
-    <video id="idleVideo" muted loop playsinline>
-        <source src="videos/MAKERTING2023.mp4" type="video/mp4">
-    </video>
+    <!-- Images will be dynamically loaded here -->
 </div>
 
 <div id="ticketModal">
@@ -334,6 +337,68 @@
     let audioInitialized = false;
     let lastAnnouncedCallId = null;
 
+    // IMAGE SLIDESHOW CONFIGURATION
+    const slideshowImages = [
+        'images/slide1.jpg',
+        'images/slide2.jpg',
+        'images/slide3.jpg',
+        'images/slide4.jpg',
+        'images/slide5.jpg'
+        // Add more image paths as needed
+    ];
+    let currentSlideIndex = 0;
+    let slideshowInterval = null;
+
+    // Initialize slideshow
+    function initSlideshow() {
+        const container = document.getElementById('screensaver-container');
+        container.innerHTML = ''; // Clear existing content
+        
+        // Create img elements for each image
+        slideshowImages.forEach((imgPath, index) => {
+            const img = document.createElement('img');
+            img.src = imgPath;
+            img.alt = `Slide ${index + 1}`;
+            if (index === 0) img.classList.add('active-slide');
+            container.appendChild(img);
+        });
+    }
+
+    // Start slideshow
+    function startSlideshow() {
+        if (slideshowInterval) return; // Already running
+        
+        slideshowInterval = setInterval(() => {
+            const images = document.querySelectorAll('#screensaver-container img');
+            if (images.length === 0) return;
+            
+            // Remove active class from current image
+            images[currentSlideIndex].classList.remove('active-slide');
+            
+            // Move to next image
+            currentSlideIndex = (currentSlideIndex + 1) % images.length;
+            
+            // Add active class to new image
+            images[currentSlideIndex].classList.add('active-slide');
+        }, 5000); // Change image every 5 seconds
+    }
+
+    // Stop slideshow
+    function stopSlideshow() {
+        if (slideshowInterval) {
+            clearInterval(slideshowInterval);
+            slideshowInterval = null;
+            currentSlideIndex = 0;
+            
+            // Reset to first image
+            const images = document.querySelectorAll('#screensaver-container img');
+            images.forEach((img, index) => {
+                img.classList.remove('active-slide');
+                if (index === 0) img.classList.add('active-slide');
+            });
+        }
+    }
+
     function initAudioOnMonitor() {
         if (currentActiveView === 'monitorView' && !audioInitialized) {
             const warmup = new SpeechSynthesisUtterance("");
@@ -407,13 +472,12 @@
 
     function toggleScreensaver(show) {
         const ss = document.getElementById('screensaver-container');
-        const video = document.getElementById('idleVideo');
         if (show && currentActiveView === 'monitorView') {
             ss.classList.add('active');
-            video.play().catch(() => console.log("User interaction required for video"));
+            startSlideshow();
         } else {
             ss.classList.remove('active');
-            video.pause();
+            stopSlideshow();
         }
     }
 
@@ -532,6 +596,7 @@
     }
 
     window.onload = () => {
+        initSlideshow(); // Initialize slideshow images
         if(currentActiveView === 'monitorView') {
             resetIdleTimer();
             setTimeout(initAudioOnMonitor, 1000);
