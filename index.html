@@ -2,52 +2,61 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>ARK Queue System with Login</title>
+<title>ARK Wireless Queue System - Secure</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
 <style>
-body{font-family:Arial;background:#f1f5f9;margin:0}
+body{margin:0;font-family:Inter,Segoe UI;background:#f1f5f9}
 .hidden{display:none}
-.login-box{max-width:400px;margin:80px auto;background:#fff;padding:30px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.15)}
-input,button{width:100%;padding:12px;margin:8px 0}
-button{background:#2563eb;color:#fff;border:none;font-weight:bold;cursor:pointer}
-.admin{background:#dc2626}
-nav button{margin:5px}
+.login-box{
+  max-width:420px;margin:80px auto;background:white;
+  padding:30px;border-radius:20px;
+  box-shadow:0 20px 40px rgba(0,0,0,.15);text-align:center
+}
+input{width:100%;padding:14px;margin:10px 0;border-radius:10px;border:2px solid #e5e7eb}
+button{width:100%;padding:14px;border:none;border-radius:12px;font-weight:900;cursor:pointer}
+.login-btn{background:#2563eb;color:white}
+nav{background:#0f172a;padding:10px;display:none;gap:10px;justify-content:center}
+nav.show{display:flex}
+nav button{background:#334155;color:white;padding:10px 15px;border-radius:8px}
+.admin{background:#dc2626!important}
+.view{display:none}
+.view.active{display:block}
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<!-- LOGIN VIEW -->
 <div id="loginView" class="login-box hidden">
-  <h2>Staff / Admin Login</h2>
+  <h2>ARK System Login</h2>
   <input id="email" placeholder="Email">
   <input id="password" type="password" placeholder="Password">
-  <button onclick="login()">LOGIN</button>
-  <p id="loginError" style="color:red"></p>
+  <button class="login-btn" onclick="login()">LOGIN</button>
+  <p id="loginMsg" style="color:red"></p>
 </div>
 
 <!-- NAV -->
-<nav id="nav" class="hidden">
-  <button onclick="showView('kiosk')">Kiosk</button>
-  <button onclick="showView('monitor')">Monitor</button>
-  <button onclick="showView('staff')">Staff Panel</button>
-  <button onclick="logout()" class="admin">Logout</button>
+<nav id="mainNav">
+  <button onclick="showView('kioskView')">KIOSK</button>
+  <button onclick="showView('staffView')">STAFF</button>
+  <button onclick="showView('monitorView')">MONITOR</button>
+  <button onclick="resetSystem()" class="admin">RESET</button>
+  <button onclick="logout()">LOGOUT</button>
 </nav>
 
-<!-- VIEWS -->
-<div id="kiosk" class="hidden"><h1>KIOSK MODE</h1></div>
-<div id="monitor" class="hidden"><h1>MONITOR SCREEN</h1></div>
-
-<div id="staff" class="hidden">
-  <h1>STAFF PANEL</h1>
-  <button onclick="resetSystem()" class="admin">RESET SYSTEM</button>
-</div>
+<!-- VIEWS (YOUR ORIGINAL SYSTEM KEPT) -->
+<div id="kioskView" class="view active"><h1>KIOSK MODE</h1></div>
+<div id="monitorView" class="view"><h1>MONITOR SCREEN</h1></div>
+<div id="staffView" class="view"><h1>STAFF PANEL</h1></div>
 
 <script>
+/* ================= FIREBASE CONFIG ================= */
 const firebaseConfig = {
   apiKey: "AIzaSyDrySDxpUqTMAzom9o1B3ZaGkL__2kx19A",
   authDomain: "ark-queue-system.firebaseapp.com",
@@ -59,13 +68,16 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.database();
 
+/* ================= DEFAULT ADMIN ================= */
 const ADMIN_EMAIL = "reymonde.silvestre@gmail.com";
-const ADMIN_PASS = "admin123";
+const ADMIN_PASS  = "admin123";
 
-function showView(id){
-  document.querySelectorAll("div").forEach(d=>d.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
-  document.getElementById("nav").classList.remove("hidden");
+/* ================= AUTH ================= */
+function login(){
+  auth.signInWithEmailAndPassword(
+    email.value.trim(),
+    password.value.trim()
+  ).catch(e=>loginMsg.innerText=e.message);
 }
 
 function logout(){
@@ -73,59 +85,32 @@ function logout(){
   location.reload();
 }
 
-async function login(){
-  try{
-    const email=document.getElementById("email").value;
-    const pass=document.getElementById("password").value;
-    const cred=await auth.signInWithEmailAndPassword(email,pass);
-    checkRole(cred.user);
-  }catch(e){
-    document.getElementById("loginError").innerText=e.message;
-  }
+/* ================= VIEW CONTROL ================= */
+function showView(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
 
+/* ================= SYSTEM RESET ================= */
 function resetSystem(){
   if(confirm("RESET ALL QUEUES?")){
-    db.ref("/").remove();
-    alert("System Reset");
+    db.ref('/').update({
+      last_REGISTRAR:0,last_FINANCE:0,
+      waiting_REGISTRAR:null,waiting_FINANCE:null,
+      currentCall:{ticket:"---",name:"Welcome",dept:"NONE"}
+    });
+    location.reload();
   }
 }
 
-// AUTO LOGIN FOR KIOSK & MONITOR
-auth.onAuthStateChanged(async user=>{
-  if(!user){
-    await auth.signInAnonymously();
-    showView("monitor");
-    return;
-  }
-
-  if(user.isAnonymous){
-    showView("monitor");
-    return;
-  }
-
-  checkRole(user);
-});
-
-// ROLE CHECK
-async function checkRole(user){
-  const snap = await db.ref("users/"+user.uid).get();
-
-  // Create default admin
-  if(user.email===ADMIN_EMAIL){
-    db.ref("users/"+user.uid).set({
-      email:user.email,
-      role:"admin",
-      approved:true
-    });
-    showView("staff");
-    return;
-  }
+/* ================= USER ROLE CHECK ================= */
+async function loadUser(uid){
+  const snap = await db.ref('users/'+uid).get();
 
   if(!snap.exists()){
-    db.ref("users/"+user.uid).set({
-      email:user.email,
-      role:"staff",
+    await db.ref('users/'+uid).set({
+      email:auth.currentUser.email,
+      role:"STAFF",
       approved:false
     });
     alert("Waiting for admin approval");
@@ -133,21 +118,52 @@ async function checkRole(user){
     return;
   }
 
-  const data=snap.val();
-  if(!data.approved){
+  const user = snap.val();
+  if(!user.approved){
     alert("Account not approved");
     logout();
     return;
   }
 
-  showView("staff");
+  document.getElementById('loginView').classList.add('hidden');
+  document.getElementById('mainNav').classList.add('show');
+
+  if(user.role==="ADMIN"||user.role==="STAFF"){
+    showView('staffView');
+  }
 }
 
-// CREATE DEFAULT ADMIN (FIRST LOAD)
-auth.signInWithEmailAndPassword(ADMIN_EMAIL,ADMIN_PASS)
-.catch(()=>{
-  auth.createUserWithEmailAndPassword(ADMIN_EMAIL,ADMIN_PASS);
+/* ================= AUTO LOGIN ================= */
+auth.onAuthStateChanged(async user=>{
+  if(!user){
+    await auth.signInAnonymously();
+    showView('monitorView');
+    return;
+  }
+
+  if(user.isAnonymous){
+    showView('monitorView');
+    return;
+  }
+
+  // AUTO CREATE ADMIN
+  if(user.email===ADMIN_EMAIL){
+    await db.ref('users/'+user.uid).set({
+      email:user.email,
+      role:"ADMIN",
+      approved:true
+    });
+    document.getElementById('mainNav').classList.add('show');
+    showView('staffView');
+    return;
+  }
+
+  loadUser(user.uid);
 });
+
+/* ================= CREATE ADMIN (ONE TIME) ================= */
+auth.signInWithEmailAndPassword(ADMIN_EMAIL,ADMIN_PASS)
+.catch(()=>auth.createUserWithEmailAndPassword(ADMIN_EMAIL,ADMIN_PASS));
 </script>
 
 </body>
