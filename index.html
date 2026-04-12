@@ -245,6 +245,14 @@
             padding-right: clamp(10px, 2vw, 20px);
         }
 
+        .mon-location { 
+            font-size: clamp(0.9rem, 1.8vw, 1.3rem); 
+            font-weight: 600; 
+            color: var(--text-muted); 
+            padding: 0 clamp(10px, 2vw, 20px) clamp(15px, 2vw, 20px);
+            font-style: italic;
+        }
+
         .waiting-list { 
             background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
             padding: clamp(1rem, 2vw, 1.5rem); 
@@ -584,6 +592,12 @@
         .modal-name {
             font-weight: bold; 
             font-size: clamp(1.2rem, 2.5vw, 1.6rem); 
+            margin-bottom: clamp(12px, 2vw, 15px);
+        }
+        .modal-location {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: var(--accent-red);
+            font-weight: 600;
             margin-bottom: clamp(12px, 2vw, 15px);
         }
         .modal-content h2 {
@@ -981,6 +995,7 @@
         <h2>YOUR TICKET NUMBER</h2>
         <div class="modal-ticket" id="displayTicket">---</div>
         <div class="modal-name" id="displayName">---</div>
+        <div class="modal-location" id="displayLocation">---</div>
         <p>Please take a photo of your ticket.</p>
         <button onclick="closeModal()">OK, GOT IT</button>
     </div>
@@ -1209,6 +1224,7 @@
             <div class="mon-header-label" style="color:var(--accent-red)">📋 REGISTRAR</div>
             <div class="mon-number" id="mon-num-REGISTRAR" style="color:var(--accent-red)">---</div>
             <div class="mon-name" id="mon-name-REGISTRAR">Welcome</div>
+            <div class="mon-location" id="mon-location-REGISTRAR"></div>
             <div class="waiting-list">
                 <h4>Next in Queue</h4>
                 <div id="next-list-REGISTRAR"></div>
@@ -1218,6 +1234,7 @@
             <div class="mon-header-label" style="color:var(--accent-red-light)">💰 FINANCE</div>
             <div class="mon-number" id="mon-num-FINANCE" style="color:var(--accent-red-light)">---</div>
             <div class="mon-name" id="mon-name-FINANCE">Welcome</div>
+            <div class="mon-location" id="mon-location-FINANCE"></div>
             <div class="waiting-list">
                 <h4>Next in Queue</h4>
                 <div id="next-list-FINANCE"></div>
@@ -1226,9 +1243,14 @@
     </div>
 </div>
 
+<!-- Ding Sound - Higher pitched bell sound -->
+<audio id="dingSound" preload="auto">
+    <source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAA==" type="audio/wav">
+</audio>
+
 <!-- Bell Sound - Embedded as Data URI -->
 <audio id="bellSound" preload="auto">
-    <source src="data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQwAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAASAAAeMwAUFBQUFCIiIiIiIjAwMDAwPj4+Pj4+TExMTExZWVlZWVlnZ2dnZ3V1dXV1dYODg4ODkZGRkZGRn5+fn5+frKysrKy6urq6urrIyMjIyNbW1tbW1uTk5OTk8vLy8vLy//////8AAAAATGF2YzU4LjEzAAAAAAAAAAAAAAAAJAQKAAAAAAAAHjOZTf9/AAAAAAAAAAAAAAAAAAAAAP/7UsAAAP8AAAaQAAAAgAAA0gAAABAAABpAAAACAAADSAAAAETEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//sUwAP8AAAGkAAAAIAAANIAAAAQAAAaQAAAAgAAA0gAAABFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" type="audio/mpeg">
+    <source src="data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0VAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQwAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAASAAAeMwAUFBQUFCIiIiIiIjAwMDAwPj4+Pj4+TExMTExZWVlZWVlnZ2dnZ3V1dXV1dYODg4ODkZGRkZGRn5+fn5+frKysrKy6urq6urrIyMjIyNbW1tbW1uTk5OTk8vLy8vLy//////8AAAAATGF2YzU4LjEzAAAAAAAAAAAAAAAAJAQKAAAAAAAAHjOZTf9/AAAAAAAAAAAAAAAAAAAAAP/7UsAAAP8AAAaQAAAAgAAA0gAAABAAABpAAAACAAADSAAAAETEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//sUwAP8AAAGkAAAAIAAANIAAAAQAAAaQAAAAgAAA0gAAABFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" type="audio/mpeg">
 </audio>
 
 <script>
@@ -1254,6 +1276,11 @@
     let queueData = { REGISTRAR: {}, FINANCE: {} };
     let currentUser = null;
     let currentUserData = null;
+
+    const departmentLocations = {
+        REGISTRAR: 'Registrar Office',
+        FINANCE: 'Finance Office'
+    };
 
     // ============= AUTHENTICATION & USER MANAGEMENT =============
     
@@ -1623,11 +1650,9 @@
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById(id).classList.add('active');
         document.getElementById('mainNav').classList.remove('show-menu');
-        if(id !== 'monitorView') {
-            toggleScreensaver(false);
-        } else {
-            resetIdleTimer();
-        }
+        // Disable screensaver for all views including monitor
+        toggleScreensaver(false);
+        clearTimeout(screensaverTimer);
     }
 
     async function resetDepartment() {
@@ -1673,24 +1698,24 @@
         }
     }
 
-    function resetIdleTimer() {
-        clearTimeout(screensaverTimer);
-        screensaverTimer = setTimeout(() => {
-            toggleScreensaver(true);
-        }, 25000); 
-    }
-
     // ============= AUDIO =============
     
+    function playDingSound() {
+        const ding = document.getElementById('dingSound');
+        ding.currentTime = 0;
+        ding.play().catch(e => console.log("Ding sound failed:", e));
+    }
+
     function playBellSound() {
         const bell = document.getElementById('bellSound');
         bell.currentTime = 0;
         bell.play().catch(e => console.log("Bell sound failed:", e));
     }
 
-    function announceTicket(name, ticket) {
+    function announceTicket(name, ticket, dept) {
         window.speechSynthesis.cancel();
-        const msg = new SpeechSynthesisUtterance(`Now serving ${name}. Ticket ${ticket}`);
+        const location = departmentLocations[dept] || 'the counter';
+        const msg = new SpeechSynthesisUtterance(`Now serving ${name}. Ticket number ${ticket}. Please proceed to the ${location}`);
         msg.rate = 0.85;
         msg.pitch = 1.0;
         msg.volume = 1.0;
@@ -1702,15 +1727,14 @@
     db.ref('currentCall').on('value', (snap) => {
         const data = snap.val();
         if(data && data.dept !== "NONE") {
-            toggleScreensaver(false);
-            resetIdleTimer();
-
             const numEl = document.getElementById('mon-num-' + data.dept);
             const nameEl = document.getElementById('mon-name-' + data.dept);
+            const locationEl = document.getElementById('mon-location-' + data.dept);
             const panelEl = document.getElementById('panel-' + data.dept);
             
             if(numEl) numEl.innerText = data.ticket;
             if(nameEl) nameEl.innerText = data.name;
+            if(locationEl) locationEl.innerText = `Please proceed to ${departmentLocations[data.dept]}`;
 
             const staffDisplay = document.getElementById('current-name-' + data.dept);
             if(staffDisplay) staffDisplay.innerText = `${data.name} (${data.ticket})`;
@@ -1721,8 +1745,9 @@
             }
 
             if (Date.now() - data.time < 3000) {
-                playBellSound();
-                setTimeout(() => announceTicket(data.name, data.ticket), 500);
+                playDingSound();
+                setTimeout(() => playBellSound(), 300);
+                setTimeout(() => announceTicket(data.name, data.ticket, data.dept), 800);
             }
 
             lastCalled[data.dept] = data;
@@ -1815,8 +1840,9 @@
 
     function repeatCall(dept) {
         if(lastCalled[dept]) {
-            playBellSound();
-            setTimeout(() => announceTicket(lastCalled[dept].name, lastCalled[dept].ticket), 500);
+            playDingSound();
+            setTimeout(() => playBellSound(), 300);
+            setTimeout(() => announceTicket(lastCalled[dept].name, lastCalled[dept].ticket, dept), 800);
         } else {
             alert("No ticket to repeat.");
         }
@@ -1843,6 +1869,7 @@
         
         document.getElementById('displayTicket').innerText = ticketID;
         document.getElementById('displayName').innerText = name;
+        document.getElementById('displayLocation').innerText = `Please proceed to ${departmentLocations[dept]}`;
         document.getElementById('ticketModal').style.display = 'flex';
         
         input.value = ""; 
@@ -1873,12 +1900,8 @@
                     showLogin();
                 }
             } else {
-                // Auto-show monitor for public display
-                if (currentActiveView === 'monitorView') {
-                    resetIdleTimer();
-                } else {
-                    showLogin();
-                }
+                // Show login by default
+                showLogin();
             }
         });
     }
