@@ -1412,7 +1412,7 @@ db.ref('currentCall').on('value', (snap) => {
     }
 });
 
-// --- repeatCall listener (NEW: broadcasts repeat call to ALL devices) ---
+// --- repeatCall listener (broadcasts repeat call to ALL devices) ---
 db.ref('repeatCall').on('value', (snap) => {
     const data = snap.val();
     if (!data || !data.id) return;
@@ -1426,19 +1426,52 @@ db.ref('repeatCall').on('value', (snap) => {
 
     const { name, ticket, dept, triggeredBy } = data;
 
-    // Show toast in staff panel (both panels see it regardless of active dept)
+    // Show toast in staff panel
     showRepeatBroadcastToast(dept, triggeredBy);
 
-    // Flash the monitor panel
+    // ---- MONITOR: re-trigger all visual effects just like a fresh callNext ----
+    const numEl = document.getElementById('mon-num-' + dept);
+    const nameEl = document.getElementById('mon-name-' + dept);
+    const locationEl = document.getElementById('mon-location-' + dept);
     const panelEl = document.getElementById('panel-' + dept);
+
+    // Ensure monitor shows the ticket (in case monitor was on a different device)
+    if (numEl) numEl.innerText = ticket;
+    if (nameEl) nameEl.innerText = name;
+    if (locationEl) locationEl.innerText = `Please proceed to ${departmentLocations[dept]}`;
+
+    // Re-trigger the "calling" pulse animation on the top bar
+    if (panelEl) {
+        panelEl.classList.remove('calling');
+        void panelEl.offsetWidth; // force reflow to restart animation
+        panelEl.classList.add('calling');
+        setTimeout(() => panelEl.classList.remove('calling'), 4000);
+    }
+
+    // Flash the ticket number so it visually "pops"
+    if (numEl) {
+        numEl.style.transition = 'none';
+        numEl.style.transform = 'scale(1.12)';
+        numEl.style.opacity = '0.5';
+        setTimeout(() => {
+            numEl.style.transition = 'transform 0.35s ease, opacity 0.35s ease';
+            numEl.style.transform = 'scale(1)';
+            numEl.style.opacity = '1';
+        }, 80);
+    }
+
+    // Flash amber glow on panel (repeat-specific visual cue)
     if (panelEl) {
         panelEl.classList.remove('repeat-flash');
         void panelEl.offsetWidth;
         panelEl.classList.add('repeat-flash');
-        setTimeout(() => panelEl.classList.remove('repeat-flash'), 2000);
+        setTimeout(() => panelEl.classList.remove('repeat-flash'), 1800);
     }
 
-    // Play ding + announce on ALL devices
+    // Show announcement indicator on the monitor panel
+    showAnnouncementIndicator(dept);
+
+    // Play ding + voice announcement on ALL devices
     playDingSound();
     setTimeout(() => announceTicket(name, ticket, dept), 900);
 });
