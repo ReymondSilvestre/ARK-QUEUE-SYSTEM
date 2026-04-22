@@ -266,6 +266,16 @@
         }
         .monitor-panel.calling::before { opacity: 1; animation: pulse 1.5s ease-in-out infinite; }
         @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+        /* ---- REPEAT FLASH on monitor panel ---- */
+        .monitor-panel.repeat-flash {
+            animation: repeatFlashPanel 0.5s ease 3;
+        }
+        @keyframes repeatFlashPanel {
+            0%, 100% { box-shadow: var(--shadow-lg); }
+            50% { box-shadow: 0 0 0 6px rgba(245,158,11,0.45), var(--shadow-lg); }
+        }
+
         .mon-header-label { 
             font-weight: 900; font-size: clamp(1.2rem, 3vw, 2.8rem); 
             letter-spacing: clamp(2px, 0.3vw, 3px); 
@@ -353,7 +363,7 @@
         .queue-item.removing { animation: queueRemove 0.3s ease-out forwards; }
         @keyframes queueRemove { to { opacity: 0; transform: translateX(30px); max-height: 0; margin: 0; padding: 0; } }
 
-        /* ===================== ENHANCED STAFF: QUEUE NOTIFICATION BELL ===================== */
+        /* ===================== QUEUE NOTIFICATION BELL ===================== */
         .queue-notification-banner {
             display: none;
             align-items: center;
@@ -377,18 +387,9 @@
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .bell-icon-wrap {
-            position: relative;
-            flex-shrink: 0;
-        }
-        .bell-svg {
-            width: 28px; height: 28px;
-            fill: #b45309;
-        }
-        .bell-svg.ringing {
-            animation: bellRing 0.5s ease-in-out 3;
-            transform-origin: top center;
-        }
+        .bell-icon-wrap { position: relative; flex-shrink: 0; }
+        .bell-svg { width: 28px; height: 28px; fill: #b45309; }
+        .bell-svg.ringing { animation: bellRing 0.5s ease-in-out 3; transform-origin: top center; }
         @keyframes bellRing {
             0%   { transform: rotate(0deg); }
             20%  { transform: rotate(-18deg); }
@@ -397,71 +398,49 @@
             80%  { transform: rotate(12deg); }
             100% { transform: rotate(0deg); }
         }
-        .bell-badge {
-            position: absolute;
-            top: -6px; right: -6px;
-            background: #ef4444;
-            color: white;
-            border-radius: 50%;
-            width: 18px; height: 18px;
-            font-size: 0.65rem;
-            font-weight: 900;
-            display: flex; align-items: center; justify-content: center;
-            border: 2px solid white;
-        }
+        .bell-badge { position: absolute; top: -6px; right: -6px; background: #ef4444; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.65rem; font-weight: 900; display: flex; align-items: center; justify-content: center; border: 2px solid white; }
         .notif-text { flex: 1; }
         .notif-title { font-weight: 700; font-size: 0.95rem; color: #78350f; }
         .notif-sub { font-size: 0.82rem; color: #92400e; margin-top: 2px; }
-        .notif-dismiss {
-            background: rgba(180,83,9,0.12);
-            border: none;
-            color: #92400e;
-            font-size: 0.8rem;
-            font-weight: 700;
-            padding: 6px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.2s;
-            flex-shrink: 0;
-        }
+        .notif-dismiss { background: rgba(180,83,9,0.12); border: none; color: #92400e; font-size: 0.8rem; font-weight: 700; padding: 6px 14px; border-radius: 8px; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
         .notif-dismiss:hover { background: rgba(180,83,9,0.22); }
 
-        /* ===================== ENHANCED STAFF: CURRENT TICKET WITH DISMISS ===================== */
-        .current-ticket-display { position: relative; }
-        .current-ticket-row {
-            display: flex;
+        /* ===================== REPEAT BROADCAST TOAST (Staff Panel) ===================== */
+        .repeat-broadcast-toast {
+            display: none;
             align-items: center;
             gap: 12px;
-            justify-content: space-between;
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border: 2px solid #f59e0b;
+            border-left: 5px solid #d97706;
+            border-radius: 14px;
+            padding: 12px 18px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #78350f;
+            animation: slideInBanner 0.35s ease-out;
         }
+        .repeat-broadcast-toast.visible { display: flex; }
+        .repeat-toast-icon { font-size: 1.3rem; flex-shrink: 0; }
+        .repeat-toast-text { flex: 1; }
+        .repeat-toast-dept { font-weight: 900; color: #92400e; }
+
+        /* ===================== CURRENT TICKET DISPLAY ===================== */
+        .current-ticket-display { position: relative; }
+        .current-ticket-row { display: flex; align-items: center; gap: 12px; justify-content: space-between; }
         .current-ticket-info { flex: 1; }
         .dismiss-no-show-btn {
             display: none;
             background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 8px 16px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            cursor: pointer;
-            gap: 6px;
-            align-items: center;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.25s;
-            box-shadow: 0 3px 10px rgba(239,68,68,0.3);
-            flex-shrink: 0;
+            color: white; border: none; border-radius: 10px;
+            padding: 8px 16px; font-size: 0.78rem; font-weight: 700; cursor: pointer;
+            gap: 6px; align-items: center; text-transform: uppercase; letter-spacing: 0.5px;
+            transition: all 0.25s; box-shadow: 0 3px 10px rgba(239,68,68,0.3); flex-shrink: 0;
         }
         .dismiss-no-show-btn.visible { display: flex; }
         .dismiss-no-show-btn:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(239,68,68,0.45); }
         .dismiss-no-show-btn:active { transform: scale(0.97); }
-        .dismiss-icon {
-            width: 14px; height: 14px;
-            fill: white;
-            flex-shrink: 0;
-        }
-        /* No-show flash animation on the current-ticket-display */
+        .dismiss-icon { width: 14px; height: 14px; fill: white; flex-shrink: 0; }
         @keyframes noShowFlash {
             0%, 100% { background: linear-gradient(135deg, #f8fafc, #f1f5f9); }
             25%, 75%  { background: linear-gradient(135deg, #fee2e2, #fecaca); border-color: #fca5a5; }
@@ -745,7 +724,7 @@
                     <span class="stats-badge" id="count-REGISTRAR">0</span>
                 </h2>
 
-                <!-- NEW: Queue Notification Banner -->
+                <!-- Queue Notification Banner -->
                 <div class="queue-notification-banner" id="notif-REGISTRAR">
                     <div class="bell-icon-wrap">
                         <svg class="bell-svg" id="bell-svg-REGISTRAR" viewBox="0 0 24 24">
@@ -758,6 +737,14 @@
                         <div class="notif-sub" id="notif-sub-REGISTRAR">1 person waiting</div>
                     </div>
                     <button class="notif-dismiss" onclick="dismissNotif('REGISTRAR')">Dismiss</button>
+                </div>
+
+                <!-- Repeat Broadcast Toast for REGISTRAR -->
+                <div class="repeat-broadcast-toast" id="repeat-toast-REGISTRAR">
+                    <span class="repeat-toast-icon">🔊</span>
+                    <div class="repeat-toast-text">
+                        Repeat call broadcast by <span class="repeat-toast-dept" id="repeat-toast-by-REGISTRAR">staff</span> — announcing on all devices
+                    </div>
                 </div>
 
                 <!-- Current Ticket with Dismiss No-Show -->
@@ -788,7 +775,7 @@
                     <span class="stats-badge" style="background: linear-gradient(135deg, var(--accent-red-light), var(--accent-red));" id="count-FINANCE">0</span>
                 </h2>
 
-                <!-- NEW: Queue Notification Banner -->
+                <!-- Queue Notification Banner -->
                 <div class="queue-notification-banner" id="notif-FINANCE">
                     <div class="bell-icon-wrap">
                         <svg class="bell-svg" id="bell-svg-FINANCE" viewBox="0 0 24 24">
@@ -801,6 +788,14 @@
                         <div class="notif-sub" id="notif-sub-FINANCE">1 person waiting</div>
                     </div>
                     <button class="notif-dismiss" onclick="dismissNotif('FINANCE')">Dismiss</button>
+                </div>
+
+                <!-- Repeat Broadcast Toast for FINANCE -->
+                <div class="repeat-broadcast-toast" id="repeat-toast-FINANCE">
+                    <span class="repeat-toast-icon">🔊</span>
+                    <div class="repeat-toast-text">
+                        Repeat call broadcast by <span class="repeat-toast-dept" id="repeat-toast-by-FINANCE">staff</span> — announcing on all devices
+                    </div>
                 </div>
 
                 <!-- Current Ticket with Dismiss No-Show -->
@@ -879,10 +874,8 @@ let queueData = { REGISTRAR: {}, FINANCE: {} };
 let currentUser = null;
 let currentUserData = null;
 
-// Track previous queue counts to detect new additions
 let prevQueueCount = { REGISTRAR: 0, FINANCE: 0 };
 let notifDismissed = { REGISTRAR: false, FINANCE: false };
-// Track whether a ticket is actively being served
 let activeTicket = { REGISTRAR: false, FINANCE: false };
 
 let audioUnlocked = false;
@@ -894,6 +887,9 @@ let announcementSettings = {
 };
 let announcementInProgress = false;
 let lastAnnouncedTicket = null;
+
+// Track processed repeat call IDs to avoid double-announcement on the sender device
+let processedRepeatIds = new Set();
 
 const departmentLocations = {
     REGISTRAR: 'Registrar Office',
@@ -1277,31 +1273,17 @@ function triggerQueueNotification(dept, count, latestName) {
     const title = document.getElementById('notif-title-' + dept);
     const sub = document.getElementById('notif-sub-' + dept);
     if (!banner) return;
-
-    // Update badge count
     badge.textContent = count;
-
-    // Update message
     title.textContent = latestName ? `${latestName} joined the queue!` : 'New student in queue!';
     sub.textContent = count === 1 ? '1 person waiting' : `${count} people waiting`;
-
-    // Show banner
     banner.classList.add('visible');
     notifDismissed[dept] = false;
-
-    // Ring bell animation (restart)
     bell.classList.remove('ringing');
-    void bell.offsetWidth; // force reflow
+    void bell.offsetWidth;
     bell.classList.add('ringing');
-
-    // Play a softer queue-arrival ding (different from the main call ding)
     playQueueArrivalSound();
-
-    // Auto-hide after 8s if staff doesn't dismiss
     clearTimeout(banner._autoHide);
-    banner._autoHide = setTimeout(() => {
-        if (!notifDismissed[dept]) dismissNotif(dept);
-    }, 8000);
+    banner._autoHide = setTimeout(() => { if (!notifDismissed[dept]) dismissNotif(dept); }, 8000);
 }
 
 function dismissNotif(dept) {
@@ -1314,36 +1296,24 @@ function dismissNotif(dept) {
 function updateDismissBtn(dept) {
     const btn = document.getElementById('dismiss-btn-' + dept);
     if (!btn) return;
-    if (activeTicket[dept]) {
-        btn.classList.add('visible');
-    } else {
-        btn.classList.remove('visible');
-    }
+    if (activeTicket[dept]) { btn.classList.add('visible'); }
+    else { btn.classList.remove('visible'); }
 }
 
 async function dismissNoShow(dept) {
     if (!confirm(`Mark current ${dept} ticket as no-show and clear it?`)) return;
-
     const display = document.getElementById('ticket-display-' + dept);
     const nameEl = document.getElementById('current-name-' + dept);
-
-    // Flash animation
     if (display) { display.classList.add('dismissing'); setTimeout(() => display.classList.remove('dismissing'), 1100); }
-
-    // Clear the current call in Firebase (set to idle)
     const currentCallSnap = await db.ref('currentCall').once('value');
     const currentCall = currentCallSnap.val();
     if (currentCall && currentCall.dept === dept) {
         await db.ref('currentCall').set({ ticket: '---', name: 'Welcome', dept: 'NONE', time: Date.now() });
     }
-
-    // Reset local state
     activeTicket[dept] = false;
     if (nameEl) nameEl.innerText = '---';
     updateDismissBtn(dept);
     lastCalled[dept] = null;
-
-    // Update monitor
     const numEl = document.getElementById('mon-num-' + dept);
     const monNameEl = document.getElementById('mon-name-' + dept);
     const locationEl = document.getElementById('mon-location-' + dept);
@@ -1385,7 +1355,6 @@ function playDingNotification() {
     } catch(e) { console.log('Audio error:', e); }
 }
 
-// Softer single-chime for new queue arrival (staff panel only)
 function playQueueArrivalSound() {
     try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1393,8 +1362,8 @@ function playQueueArrivalSound() {
         const gain = ctx.createGain();
         osc.connect(gain); gain.connect(ctx.destination);
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(880, ctx.currentTime);      // A5 — friendly, distinct
-        osc.frequency.setValueAtTime(1109, ctx.currentTime + 0.12); // C#6
+        osc.frequency.setValueAtTime(880, ctx.currentTime);
+        osc.frequency.setValueAtTime(1109, ctx.currentTime + 0.12);
         gain.gain.setValueAtTime(0.001, ctx.currentTime);
         gain.gain.linearRampToValueAtTime(0.32, ctx.currentTime + 0.02);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.55);
@@ -1408,6 +1377,8 @@ function playDingSound() { playDingNotification(); }
 function playBellSound() {}
 
 // ===================== FIREBASE LISTENERS =====================
+
+// --- currentCall listener ---
 db.ref('currentCall').on('value', (snap) => {
     const data = snap.val();
     if (data && data.dept !== 'NONE') {
@@ -1425,8 +1396,6 @@ db.ref('currentCall').on('value', (snap) => {
         if (panelEl) { panelEl.classList.add('calling'); setTimeout(() => panelEl.classList.remove('calling'), 3000); }
 
         lastCalled[data.dept] = data;
-
-        // Show the no-show dismiss button since a ticket is active
         activeTicket[data.dept] = true;
         updateDismissBtn(data.dept);
 
@@ -1436,7 +1405,6 @@ db.ref('currentCall').on('value', (snap) => {
             setTimeout(() => announceTicket(data.name, data.ticket, data.dept), 900);
         }
     } else if (data && data.dept === 'NONE') {
-        // Idle state — hide dismiss buttons
         ['REGISTRAR', 'FINANCE'].forEach(dept => {
             activeTicket[dept] = false;
             updateDismissBtn(dept);
@@ -1444,6 +1412,55 @@ db.ref('currentCall').on('value', (snap) => {
     }
 });
 
+// --- repeatCall listener (NEW: broadcasts repeat call to ALL devices) ---
+db.ref('repeatCall').on('value', (snap) => {
+    const data = snap.val();
+    if (!data || !data.id) return;
+
+    // Avoid processing the same repeat event twice
+    if (processedRepeatIds.has(data.id)) return;
+    processedRepeatIds.add(data.id);
+
+    // Only react to recent events (within 5 seconds)
+    if (Date.now() - data.time > 5000) return;
+
+    const { name, ticket, dept, triggeredBy } = data;
+
+    // Show toast in staff panel (both panels see it regardless of active dept)
+    showRepeatBroadcastToast(dept, triggeredBy);
+
+    // Flash the monitor panel
+    const panelEl = document.getElementById('panel-' + dept);
+    if (panelEl) {
+        panelEl.classList.remove('repeat-flash');
+        void panelEl.offsetWidth;
+        panelEl.classList.add('repeat-flash');
+        setTimeout(() => panelEl.classList.remove('repeat-flash'), 2000);
+    }
+
+    // Play ding + announce on ALL devices
+    playDingSound();
+    setTimeout(() => announceTicket(name, ticket, dept), 900);
+});
+
+// Show repeat broadcast toast in the staff panel
+function showRepeatBroadcastToast(dept, triggeredBy) {
+    ['REGISTRAR', 'FINANCE'].forEach(d => {
+        const toast = document.getElementById('repeat-toast-' + d);
+        const byEl = document.getElementById('repeat-toast-by-' + d);
+        if (!toast) return;
+
+        // Show toast only for the relevant dept
+        if (d === dept) {
+            if (byEl) byEl.textContent = triggeredBy || 'staff';
+            toast.classList.add('visible');
+            clearTimeout(toast._hideTimer);
+            toast._hideTimer = setTimeout(() => toast.classList.remove('visible'), 5000);
+        }
+    });
+}
+
+// --- Queue listeners ---
 ['REGISTRAR', 'FINANCE'].forEach(dept => {
     db.ref('waiting_' + dept).on('value', (snap) => {
         const monEl = document.getElementById('next-list-' + dept);
@@ -1459,7 +1476,6 @@ db.ref('currentCall').on('value', (snap) => {
             const row = child.val();
             queueData[dept][child.key] = row;
             count++;
-            if (count === 1) latestName = row.name; // first entry = most recently added (Firebase push order)
 
             if (count <= 5 && monEl) {
                 const div = document.createElement('div');
@@ -1476,15 +1492,14 @@ db.ref('currentCall').on('value', (snap) => {
             }
         });
 
+        // Newest pushed item = last in forEach
+        snap.forEach(child => { latestName = child.val().name; });
+
         if (countEl) countEl.innerText = count;
         if (queueEl && count === 0) queueEl.innerHTML = '<p style="text-align:center; color: var(--text-muted); padding: 20px;">No students in queue</p>';
 
-        // Trigger notification only when count increases
         if (count > prevQueueCount[dept] && prevQueueCount[dept] >= 0) {
-            // Get the last added item name (last child in Firebase = most recent push)
-            let newestName = null;
-            snap.forEach(child => { newestName = child.val().name; }); // last iteration = newest
-            triggerQueueNotification(dept, count, newestName);
+            triggerQueueNotification(dept, count, latestName);
         }
         prevQueueCount[dept] = count;
     });
@@ -1518,12 +1533,30 @@ async function removeQueueItem(event, dept, key) {
     await db.ref('waiting_' + dept + '/' + key).remove();
 }
 
-function repeatCall(dept) {
-    if (lastCalled[dept]) {
-        playDingSound();
-        setTimeout(() => playBellSound(), 400);
-        setTimeout(() => announceTicket(lastCalled[dept].name, lastCalled[dept].ticket, dept), 900);
-    } else { alert('No ticket to repeat.'); }
+// ===================== REPEAT CALL (ENHANCED — broadcasts to ALL devices) =====================
+async function repeatCall(dept) {
+    if (!lastCalled[dept]) { alert('No ticket to repeat.'); return; }
+
+    const { name, ticket } = lastCalled[dept];
+    const triggeredBy = currentUserData?.name || currentUserData?.email || 'Staff';
+
+    // Write a unique repeat event to Firebase — all listening devices will pick it up
+    const repeatId = Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+
+    // Pre-mark as processed so this device doesn't double-announce
+    // (it will be announced via the listener below, same as other devices)
+    // Actually we DO want this device to also announce — we just mark it so
+    // the listener handles it uniformly. So we do NOT pre-add to processedRepeatIds here.
+
+    await db.ref('repeatCall').set({
+        id: repeatId,
+        ticket,
+        name,
+        dept,
+        triggeredBy,
+        time: Date.now()
+    });
+    // The Firebase listener on 'repeatCall' handles announcement for everyone including this device.
 }
 
 function switchDept(dept) {
