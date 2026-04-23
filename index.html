@@ -44,6 +44,8 @@
             position: relative;
         }
 
+        body.hide-branding .inst-header { display: none; }
+
         /* ===================== AUDIO UNLOCK OVERLAY ===================== */
         #audioUnlockOverlay {
             position: fixed;
@@ -67,11 +69,7 @@
             width: 90%;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-        .unlock-icon {
-            font-size: 56px;
-            margin-bottom: 16px;
-            display: block;
-        }
+        .unlock-icon { font-size: 56px; margin-bottom: 16px; display: block; }
         .unlock-card h2 {
             margin: 0 0 12px;
             font-size: 1.6rem;
@@ -81,12 +79,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .unlock-card p {
-            color: #6b7280;
-            font-size: 1rem;
-            margin: 0 0 28px;
-            line-height: 1.6;
-        }
+        .unlock-card p { color: #6b7280; font-size: 1rem; margin: 0 0 28px; line-height: 1.6; }
         .unlock-btn {
             background: linear-gradient(135deg, #ef4444, #dc2626);
             color: white;
@@ -103,7 +96,6 @@
             box-shadow: 0 8px 24px rgba(239,68,68,0.35);
         }
         .unlock-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(239,68,68,0.45); }
-        .unlock-btn:active { transform: translateY(0); }
 
         /* ===================== SCREENSAVER ===================== */
         #screensaver-container {
@@ -121,10 +113,7 @@
             align-items: center;
         }
         #screensaver-container.active { visibility: visible; opacity: 1; }
-        #screensaver-container video {
-            width: 100%; height: 100%;
-            object-fit: cover; object-position: center;
-        }
+        #screensaver-container video { width: 100%; height: 100%; object-fit: cover; object-position: center; }
 
         /* ===================== ANNOUNCEMENT INDICATOR ===================== */
         .announcement-indicator {
@@ -142,15 +131,7 @@
             0%, 100% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.3); opacity: 0.7; }
         }
-        .announcement-status {
-            background: #dcfce7;
-            border-left: 4px solid #10b981;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            font-size: 0.9rem;
-            color: #065f46;
-        }
+        .announcement-status { background: #dcfce7; border-left: 4px solid #10b981; padding: 12px; border-radius: 8px; margin-bottom: 12px; font-size: 0.9rem; color: #065f46; }
 
         /* ===================== HEADER ===================== */
         .inst-header { 
@@ -162,166 +143,89 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.12);
             position: relative; z-index: 100; width: 100%;
         }
-        .school-logo { 
-            height: clamp(50px, 8vw, 80px); width: auto; 
-            margin-bottom: clamp(5px, 1vw, 8px);
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
-            transition: transform 0.3s ease;
-        }
+        .school-logo { height: clamp(50px, 8vw, 80px); width: auto; margin-bottom: clamp(5px, 1vw, 8px); filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); transition: transform 0.3s ease; }
         .school-logo:hover { transform: scale(1.05); }
-        .inst-header h1 { 
-            margin: 0; 
-            font-size: clamp(0.9rem, 2.5vw, 2.2rem); 
-            font-weight: 800; 
-            background: linear-gradient(135deg, var(--accent-red), var(--black-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-transform: uppercase; line-height: 1.3;
-            letter-spacing: clamp(0.5px, 0.1vw, 1px);
-        }
-        .admin-icon {
-            transition: all 0.3s ease;
-            width: clamp(24px, 3vw, 32px); height: auto;
-        }
+        .inst-header h1 { margin: 0; font-size: clamp(0.9rem, 2.5vw, 2.2rem); font-weight: 800; background: linear-gradient(135deg, var(--accent-red), var(--black-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-transform: uppercase; line-height: 1.3; letter-spacing: clamp(0.5px, 0.1vw, 1px); }
+        .admin-icon { transition: all 0.3s ease; width: clamp(24px, 3vw, 32px); height: auto; }
         .admin-icon:hover { fill: var(--accent-red); transform: scale(1.1); }
         .header-right { position: absolute; right: clamp(10px, 2vw, 20px); top: clamp(10px, 2vw, 20px); }
 
-        /* ===================== AUDIO STATUS BADGE (Monitor) ===================== */
-        .audio-status-badge {
-            position: fixed;
-            bottom: 16px;
-            right: 16px;
-            background: rgba(0,0,0,0.75);
-            color: white;
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            z-index: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
+        /* ===================== AUDIO STATUS BADGE ===================== */
+        .audio-status-badge { position: fixed; bottom: 16px; right: 16px; background: rgba(0,0,0,0.75); color: white; padding: 8px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; z-index: 500; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.3s; }
         .audio-status-badge:hover { background: rgba(0,0,0,0.9); }
-        .audio-dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: #ef4444;
-            flex-shrink: 0;
-        }
+        .audio-dot { width: 8px; height: 8px; border-radius: 50%; background: #ef4444; flex-shrink: 0; }
         .audio-dot.active { background: #10b981; animation: dotPulse 2s ease-in-out infinite; }
-        @keyframes dotPulse {
-            0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
-        }
+        @keyframes dotPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
         /* ===================== NAV ===================== */
-        nav { 
-            background: linear-gradient(135deg, var(--black-light) 0%, var(--black-lighter) 100%);
-            padding: clamp(8px, 1.5vw, 12px); 
-            display: none; flex-wrap: wrap; gap: clamp(6px, 1vw, 10px); 
-            justify-content: center; z-index: 101;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2); width: 100%;
-        }
+        nav { background: linear-gradient(135deg, var(--black-light) 0%, var(--black-lighter) 100%); padding: clamp(8px, 1.5vw, 12px); display: none; flex-wrap: wrap; gap: clamp(6px, 1vw, 10px); justify-content: center; z-index: 101; box-shadow: 0 4px 16px rgba(0,0,0,0.2); width: 100%; }
         nav.show-menu { display: flex; }
-        nav button { 
-            background: linear-gradient(135deg, #505050 0%, #606060 100%);
-            color: white; border: none; 
-            padding: clamp(10px, 1.5vw, 12px) clamp(15px, 2.5vw, 20px); 
-            border-radius: clamp(8px, 1.2vw, 12px); 
-            cursor: pointer; font-size: clamp(0.75rem, 1.2vw, 0.85rem);
-            font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-            transition: all 0.3s ease; box-shadow: var(--shadow-sm);
-        }
+        nav button { background: linear-gradient(135deg, #505050 0%, #606060 100%); color: white; border: none; padding: clamp(10px, 1.5vw, 12px) clamp(15px, 2.5vw, 20px); border-radius: clamp(8px, 1.2vw, 12px); cursor: pointer; font-size: clamp(0.75rem, 1.2vw, 0.85rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.3s ease; box-shadow: var(--shadow-sm); }
         nav button:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); background: linear-gradient(135deg, #606060 0%, #707070 100%); }
-        nav button:active { transform: translateY(0); }
 
         /* ===================== VIEWS ===================== */
         .view { display: none; padding: clamp(1rem, 2vw, 1.5rem); width: 100%; flex: 1; overflow-y: auto; }
         .view.active { display: flex; flex-direction: column; align-items: center; }
 
         /* ===================== MONITOR ===================== */
-        .monitor-container { 
-            display: grid; grid-template-columns: 1fr;
-            width: 100%; max-width: 1600px;
-            gap: clamp(1rem, 2vw, 2rem); 
-            margin: auto; padding: 0 clamp(0.5rem, 2vw, 0);
-        }
-        .monitor-panel { 
-            background: var(--card-bg); 
-            border-radius: clamp(20px, 3vw, 28px); 
-            overflow: hidden; box-shadow: var(--shadow-lg);
-            display: flex; flex-direction: column; text-align: center;
-            border: clamp(2px, 0.3vw, 3px) solid transparent;
-            transition: all 0.3s ease; position: relative;
-            min-height: clamp(400px, 50vh, 600px);
-        }
-        .monitor-panel::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0;
-            height: clamp(6px, 1vw, 8px);
-            background: linear-gradient(90deg, var(--accent-red), var(--accent-red-lighter));
-            opacity: 0; transition: opacity 0.3s ease;
-        }
+        .monitor-container { display: grid; grid-template-columns: 1fr; width: 100%; max-width: 1600px; gap: clamp(1rem, 2vw, 2rem); margin: auto; padding: 0 clamp(0.5rem, 2vw, 0); }
+        .monitor-panel { background: var(--card-bg); border-radius: clamp(20px, 3vw, 28px); overflow: hidden; box-shadow: var(--shadow-lg); display: flex; flex-direction: column; text-align: center; border: clamp(2px, 0.3vw, 3px) solid transparent; transition: all 0.3s ease; position: relative; min-height: clamp(400px, 50vh, 600px); }
+        .monitor-panel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: clamp(6px, 1vw, 8px); background: linear-gradient(90deg, var(--accent-red), var(--accent-red-lighter)); opacity: 0; transition: opacity 0.3s ease; }
         .monitor-panel.calling::before { opacity: 1; animation: pulse 1.5s ease-in-out infinite; }
         @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+        .monitor-panel.repeat-flash { animation: repeatFlashPanel 0.5s ease 3; }
+        @keyframes repeatFlashPanel { 0%, 100% { box-shadow: var(--shadow-lg); } 50% { box-shadow: 0 0 0 6px rgba(245,158,11,0.45), var(--shadow-lg); } }
 
-        /* ---- REPEAT FLASH on monitor panel ---- */
-        .monitor-panel.repeat-flash {
-            animation: repeatFlashPanel 0.5s ease 3;
-        }
-        @keyframes repeatFlashPanel {
-            0%, 100% { box-shadow: var(--shadow-lg); }
-            50% { box-shadow: 0 0 0 6px rgba(245,158,11,0.45), var(--shadow-lg); }
-        }
+        .mon-header-label { font-weight: 900; font-size: clamp(1.2rem, 3vw, 2.8rem); letter-spacing: clamp(2px, 0.3vw, 3px); padding: clamp(20px, 3vw, 24px) clamp(15px, 2vw, 20px) clamp(8px, 1vw, 10px); text-transform: uppercase; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        .mon-number { font-size: clamp(3rem, 10vw, 9rem); font-weight: 900; font-family: 'Courier New', monospace; margin: clamp(10px, 2vw, 15px) 0; text-shadow: 3px 3px 6px rgba(0,0,0,0.15); letter-spacing: clamp(2px, 0.5vw, 4px); line-height: 1; }
 
-        .mon-header-label { 
-            font-weight: 900; font-size: clamp(1.2rem, 3vw, 2.8rem); 
-            letter-spacing: clamp(2px, 0.3vw, 3px); 
-            padding: clamp(20px, 3vw, 24px) clamp(15px, 2vw, 20px) clamp(8px, 1vw, 10px);
-            text-transform: uppercase; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        /* ===================== WINDOW DISPLAY — ENHANCED ===================== */
+        .mon-window-badge {
+            display: none;
+            margin: 0 auto clamp(8px, 1.5vw, 12px);
+            background: linear-gradient(135deg, var(--accent-red), #dc2626);
+            color: white;
+            border-radius: clamp(12px, 2vw, 16px);
+            padding: clamp(10px, 1.5vw, 14px) clamp(20px, 3vw, 32px);
+            font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 6px 20px rgba(239,68,68,0.35);
+            animation: windowPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: fit-content;
+            max-width: 90%;
         }
-        .mon-number { 
-            font-size: clamp(3rem, 10vw, 9rem); 
-            font-weight: 900; font-family: 'Courier New', monospace; 
-            margin: clamp(10px, 2vw, 15px) 0;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.15);
-            letter-spacing: clamp(2px, 0.5vw, 4px); line-height: 1;
+        @keyframes windowPop {
+            0% { transform: scale(0.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
-        .mon-name { 
-            font-size: clamp(1rem, 2vw, 1.4rem); font-weight: 700; color: var(--text-main); 
-            padding-bottom: clamp(20px, 3vw, 24px); min-height: 2em;
-            padding-left: clamp(10px, 2vw, 20px); padding-right: clamp(10px, 2vw, 20px);
+        .mon-window-badge.visible { display: block; }
+        .mon-window-badge .window-arrow { margin-right: 8px; opacity: 0.85; }
+
+        /* Proceed label under the window badge */
+        .mon-proceed-label {
+            font-size: clamp(0.75rem, 1.4vw, 1rem);
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: clamp(4px, 0.8vw, 8px);
+            display: none;
         }
-        .mon-location { 
-            font-size: clamp(0.9rem, 1.8vw, 1.3rem); font-weight: 600; color: var(--text-muted); 
-            padding: 0 clamp(10px, 2vw, 20px) clamp(15px, 2vw, 20px); font-style: italic;
-        }
-        .waiting-list { 
-            background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-            padding: clamp(1rem, 2vw, 1.5rem); border-top: 2px solid #e2e8f0; 
-            flex: 1; overflow-y: auto;
-        }
+        .mon-proceed-label.visible { display: block; }
+
+        .mon-name { font-size: clamp(1rem, 2vw, 1.4rem); font-weight: 700; color: var(--text-main); padding-bottom: clamp(20px, 3vw, 24px); min-height: 2em; padding-left: clamp(10px, 2vw, 20px); padding-right: clamp(10px, 2vw, 20px); }
+        .mon-location { font-size: clamp(0.9rem, 1.8vw, 1.3rem); font-weight: 600; color: var(--text-muted); padding: 0 clamp(10px, 2vw, 20px) clamp(15px, 2vw, 20px); font-style: italic; }
+        .waiting-list { background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%); padding: clamp(1rem, 2vw, 1.5rem); border-top: 2px solid #e2e8f0; flex: 1; overflow-y: auto; }
         .waiting-list h4 { margin: 0 0 clamp(10px, 1.5vw, 15px) 0; color: var(--text-muted); font-size: clamp(0.8rem, 1.2vw, 0.9rem); text-transform: uppercase; letter-spacing: 1px; }
-        .waiting-row { 
-            display: flex; justify-content: space-between; align-items: center;
-            padding: clamp(10px, 1.5vw, 12px) clamp(14px, 2vw, 18px); 
-            background: white; border-radius: clamp(10px, 1.5vw, 12px); 
-            margin-bottom: clamp(8px, 1.2vw, 10px); font-size: clamp(0.9rem, 1.5vw, 1.05rem);
-            box-shadow: var(--shadow-sm); transition: all 0.2s ease; cursor: default;
-        }
+        .waiting-row { display: flex; justify-content: space-between; align-items: center; padding: clamp(10px, 1.5vw, 12px) clamp(14px, 2vw, 18px); background: white; border-radius: clamp(10px, 1.5vw, 12px); margin-bottom: clamp(8px, 1.2vw, 10px); font-size: clamp(0.9rem, 1.5vw, 1.05rem); box-shadow: var(--shadow-sm); transition: all 0.2s ease; cursor: default; }
         .waiting-row:hover { transform: translateX(4px); box-shadow: var(--shadow-md); }
         .waiting-row span { flex: 1; text-align: left; padding-right: 10px; }
         .waiting-row b { flex-shrink: 0; font-size: clamp(1rem, 1.8vw, 1.2rem); }
 
         /* ===================== KIOSK ===================== */
-        .kiosk-card { 
-            background: white; padding: clamp(2rem, 4vw, 2.5rem); 
-            border-radius: clamp(24px, 4vw, 32px); box-shadow: var(--shadow-lg);
-            width: 100%; max-width: clamp(400px, 90vw, 550px); text-align: center;
-            border: 3px solid #f1f5f9;
-        }
+        .kiosk-card { background: white; padding: clamp(2rem, 4vw, 2.5rem); border-radius: clamp(24px, 4vw, 32px); box-shadow: var(--shadow-lg); width: 100%; max-width: clamp(400px, 90vw, 550px); text-align: center; border: 3px solid #f1f5f9; }
         .kiosk-card h2 { background: linear-gradient(135deg, var(--accent-red), var(--black-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: clamp(1.5rem, 4vw, 2rem); margin-top: 0; margin-bottom: clamp(1.5rem, 3vw, 2rem); }
         .name-input { width: 100%; padding: clamp(1.2rem, 2vw, 1.4rem); font-size: clamp(1.1rem, 2vw, 1.3rem); border-radius: clamp(12px, 2vw, 16px); border: 3px solid #e2e8f0; margin-bottom: clamp(1.5rem, 2.5vw, 1.8rem); text-align: center; outline: none; transition: all 0.3s ease; font-weight: 600; box-sizing: border-box; }
         .name-input:focus { border-color: var(--accent-red); box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1); }
@@ -329,7 +233,6 @@
         .btn-reg { background: linear-gradient(135deg, var(--accent-red) 0%, #dc2626 100%); color: white; }
         .btn-fin { background: linear-gradient(135deg, var(--accent-red-light) 0%, var(--accent-red) 100%); color: white; }
         .btn-reg:hover, .btn-fin:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0,0,0,0.2); }
-        .btn-reg:active, .btn-fin:active { transform: translateY(-1px); }
 
         /* ===================== STAFF ===================== */
         .staff-container { display: flex; flex-direction: column; width: 100%; max-width: clamp(900px, 95vw, 1100px); background: white; border-radius: clamp(20px, 3vw, 28px); overflow: hidden; box-shadow: var(--shadow-lg); border: 3px solid #f1f5f9; }
@@ -337,9 +240,24 @@
         .staff-sidebar button { flex: 1; padding: clamp(1.2rem, 2vw, 1.4rem); border: none; font-weight: 700; cursor: pointer; transition: all 0.3s; font-size: clamp(0.85rem, 1.5vw, 1rem); text-transform: uppercase; letter-spacing: 1px; background: transparent; color: var(--text-muted); }
         .staff-sidebar button.active-dept { background: white; color: var(--accent-red); box-shadow: inset 0 -5px 0 var(--accent-red); }
         .staff-content { flex: 1; padding: clamp(1.5rem, 3vw, 2.5rem); display: flex; flex-direction: column; gap: clamp(1.5rem, 2.5vw, 2rem); }
-        .current-ticket-display { background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: clamp(15px, 2.5vw, 20px); border-radius: clamp(12px, 2vw, 16px); border: 2px solid #e2e8f0; box-shadow: var(--shadow-sm); }
+        .current-ticket-display { background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: clamp(15px, 2.5vw, 20px); border-radius: clamp(12px, 2vw, 16px); border: 2px solid #e2e8f0; box-shadow: var(--shadow-sm); position: relative; }
         .current-ticket-display h3 { margin: 0 0 clamp(8px, 1.5vw, 10px) 0; font-size: clamp(0.8rem, 1.3vw, 0.9rem); color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
         .current-ticket-info { font-weight: 700; font-size: clamp(1.2rem, 2.5vw, 1.6rem); color: var(--text-main); }
+
+        /* Window info in staff panel */
+        .current-window-info {
+            display: none;
+            margin-top: 6px;
+            font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, var(--accent-red), #dc2626);
+            border-radius: 8px;
+            padding: 5px 12px;
+            width: fit-content;
+        }
+        .current-window-info.visible { display: block; }
+
         .staff-actions { display: flex; gap: clamp(12px, 2vw, 15px); justify-content: center; flex-wrap: wrap; align-items: center; }
         .call-btn { width: clamp(150px, 25vw, 200px); height: clamp(150px, 25vw, 200px); border-radius: 50%; color: white; border: none; font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 900; cursor: pointer; transition: all 0.3s; box-shadow: var(--shadow-lg); text-transform: uppercase; letter-spacing: 1px; line-height: 1.3; }
         .call-btn:hover { transform: scale(1.05); box-shadow: 0 15px 40px rgba(0,0,0,0.25); }
@@ -358,46 +276,19 @@
         .delete-queue-btn { background: transparent; border: 2px solid #fca5a5; color: #ef4444; border-radius: clamp(8px, 1.2vw, 10px); width: clamp(34px, 5vw, 40px); height: clamp(34px, 5vw, 40px); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.25s; flex-shrink: 0; padding: 0; }
         .delete-queue-btn:hover { background: #ef4444; border-color: #ef4444; }
         .delete-queue-btn:hover .del-icon { fill: white; }
-        .delete-queue-btn:active { transform: scale(0.93); }
         .del-icon { fill: #ef4444; width: 16px; height: 16px; transition: fill 0.2s; pointer-events: none; }
         .queue-item.removing { animation: queueRemove 0.3s ease-out forwards; }
         @keyframes queueRemove { to { opacity: 0; transform: translateX(30px); max-height: 0; margin: 0; padding: 0; } }
 
         /* ===================== QUEUE NOTIFICATION BELL ===================== */
-        .queue-notification-banner {
-            display: none;
-            align-items: center;
-            gap: 12px;
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            border: 2px solid #f59e0b;
-            border-radius: 14px;
-            padding: 14px 20px;
-            animation: slideInBanner 0.4s ease-out;
-            position: relative;
-            overflow: hidden;
-        }
+        .queue-notification-banner { display: none; align-items: center; gap: 12px; background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2px solid #f59e0b; border-radius: 14px; padding: 14px 20px; animation: slideInBanner 0.4s ease-out; position: relative; overflow: hidden; }
         .queue-notification-banner.visible { display: flex; }
-        .queue-notification-banner::before {
-            content: '';
-            position: absolute; left: 0; top: 0; bottom: 0;
-            width: 5px;
-            background: #f59e0b;
-        }
-        @keyframes slideInBanner {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .queue-notification-banner::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: #f59e0b; }
+        @keyframes slideInBanner { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         .bell-icon-wrap { position: relative; flex-shrink: 0; }
         .bell-svg { width: 28px; height: 28px; fill: #b45309; }
         .bell-svg.ringing { animation: bellRing 0.5s ease-in-out 3; transform-origin: top center; }
-        @keyframes bellRing {
-            0%   { transform: rotate(0deg); }
-            20%  { transform: rotate(-18deg); }
-            40%  { transform: rotate(18deg); }
-            60%  { transform: rotate(-12deg); }
-            80%  { transform: rotate(12deg); }
-            100% { transform: rotate(0deg); }
-        }
+        @keyframes bellRing { 0% { transform: rotate(0deg); } 20% { transform: rotate(-18deg); } 40% { transform: rotate(18deg); } 60% { transform: rotate(-12deg); } 80% { transform: rotate(12deg); } 100% { transform: rotate(0deg); } }
         .bell-badge { position: absolute; top: -6px; right: -6px; background: #ef4444; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.65rem; font-weight: 900; display: flex; align-items: center; justify-content: center; border: 2px solid white; }
         .notif-text { flex: 1; }
         .notif-title { font-weight: 700; font-size: 0.95rem; color: #78350f; }
@@ -405,46 +296,21 @@
         .notif-dismiss { background: rgba(180,83,9,0.12); border: none; color: #92400e; font-size: 0.8rem; font-weight: 700; padding: 6px 14px; border-radius: 8px; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
         .notif-dismiss:hover { background: rgba(180,83,9,0.22); }
 
-        /* ===================== REPEAT BROADCAST TOAST (Staff Panel) ===================== */
-        .repeat-broadcast-toast {
-            display: none;
-            align-items: center;
-            gap: 12px;
-            background: linear-gradient(135deg, #fffbeb, #fef3c7);
-            border: 2px solid #f59e0b;
-            border-left: 5px solid #d97706;
-            border-radius: 14px;
-            padding: 12px 18px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #78350f;
-            animation: slideInBanner 0.35s ease-out;
-        }
+        /* ===================== REPEAT BROADCAST TOAST ===================== */
+        .repeat-broadcast-toast { display: none; align-items: center; gap: 12px; background: linear-gradient(135deg, #fffbeb, #fef3c7); border: 2px solid #f59e0b; border-left: 5px solid #d97706; border-radius: 14px; padding: 12px 18px; font-size: 0.9rem; font-weight: 600; color: #78350f; animation: slideInBanner 0.35s ease-out; }
         .repeat-broadcast-toast.visible { display: flex; }
         .repeat-toast-icon { font-size: 1.3rem; flex-shrink: 0; }
         .repeat-toast-text { flex: 1; }
         .repeat-toast-dept { font-weight: 900; color: #92400e; }
 
-        /* ===================== CURRENT TICKET DISPLAY ===================== */
-        .current-ticket-display { position: relative; }
+        /* ===================== NO-SHOW DISMISS ===================== */
         .current-ticket-row { display: flex; align-items: center; gap: 12px; justify-content: space-between; }
         .current-ticket-info { flex: 1; }
-        .dismiss-no-show-btn {
-            display: none;
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: white; border: none; border-radius: 10px;
-            padding: 8px 16px; font-size: 0.78rem; font-weight: 700; cursor: pointer;
-            gap: 6px; align-items: center; text-transform: uppercase; letter-spacing: 0.5px;
-            transition: all 0.25s; box-shadow: 0 3px 10px rgba(239,68,68,0.3); flex-shrink: 0;
-        }
+        .dismiss-no-show-btn { display: none; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; border-radius: 10px; padding: 8px 16px; font-size: 0.78rem; font-weight: 700; cursor: pointer; gap: 6px; align-items: center; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.25s; box-shadow: 0 3px 10px rgba(239,68,68,0.3); flex-shrink: 0; }
         .dismiss-no-show-btn.visible { display: flex; }
         .dismiss-no-show-btn:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(239,68,68,0.45); }
-        .dismiss-no-show-btn:active { transform: scale(0.97); }
         .dismiss-icon { width: 14px; height: 14px; fill: white; flex-shrink: 0; }
-        @keyframes noShowFlash {
-            0%, 100% { background: linear-gradient(135deg, #f8fafc, #f1f5f9); }
-            25%, 75%  { background: linear-gradient(135deg, #fee2e2, #fecaca); border-color: #fca5a5; }
-        }
+        @keyframes noShowFlash { 0%, 100% { background: linear-gradient(135deg, #f8fafc, #f1f5f9); } 25%, 75% { background: linear-gradient(135deg, #fee2e2, #fecaca); border-color: #fca5a5; } }
         .current-ticket-display.dismissing { animation: noShowFlash 0.5s ease 2; }
 
         /* ===================== MODAL ===================== */
@@ -452,6 +318,23 @@
         .modal-content { background: white; padding: clamp(2rem, 4vw, 3rem); border-radius: clamp(24px, 4vw, 32px); text-align: center; width: 100%; max-width: clamp(350px, 90vw, 480px); box-shadow: 0 20px 60px rgba(0,0,0,0.3); border: 4px solid #f1f5f9; animation: modalSlideIn 0.4s ease-out; }
         @keyframes modalSlideIn { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
         .modal-ticket { font-size: clamp(3.5rem, 10vw, 6rem); font-weight: 900; background: linear-gradient(135deg, var(--accent-red), var(--black-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: clamp(12px, 2vw, 15px) 0; font-family: 'Courier New', monospace; letter-spacing: clamp(2px, 0.5vw, 4px); line-height: 1; }
+        
+        /* Modal window badge */
+        .modal-window-badge {
+            display: none;
+            margin: 0 auto clamp(10px, 1.5vw, 14px);
+            background: linear-gradient(135deg, var(--accent-red), #dc2626);
+            color: white;
+            border-radius: 14px;
+            padding: 12px 24px;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-weight: 900;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 20px rgba(239,68,68,0.3);
+            width: fit-content;
+        }
+        .modal-window-badge.visible { display: block; }
+
         .modal-name { font-weight: bold; font-size: clamp(1.2rem, 2.5vw, 1.6rem); margin-bottom: clamp(12px, 2vw, 15px); }
         .modal-location { font-size: clamp(1rem, 2vw, 1.3rem); color: var(--accent-red); font-weight: 600; margin-bottom: clamp(12px, 2vw, 15px); }
         .modal-content h2 { color: var(--text-muted); font-size: clamp(0.9rem, 1.5vw, 1.1rem); font-weight: 700; text-transform: uppercase; letter-spacing: clamp(1px, 0.2vw, 2px); margin: 0; }
@@ -477,17 +360,19 @@
         .btn-secondary:hover { background: linear-gradient(135deg, var(--black-lighter), #505050); }
         .btn-danger { background: linear-gradient(135deg, #dc2626, #b91c1c); color: white; }
         .user-list { max-height: 400px; overflow-y: auto; margin: 1.5rem 0; }
-        .user-item { background: #f8fafc; padding: 1rem; border-radius: 12px; margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-        .user-info { flex: 1; }
+        .user-item { background: #f8fafc; padding: 1rem; border-radius: 12px; margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .user-info { flex: 1; min-width: 200px; }
         .user-email { font-weight: 600; color: var(--text-main); }
         .user-role { font-size: 0.85rem; color: var(--text-muted); text-transform: capitalize; }
+        .user-window { font-size: 0.85rem; color: var(--accent-red); font-weight: 600; }
         .user-status { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
         .status-pending { background: #fef3c7; color: #92400e; }
         .status-approved { background: #d1fae5; color: #065f46; }
-        .user-actions { display: flex; gap: 0.5rem; }
+        .user-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
         .btn-small { padding: 6px 12px; border: none; border-radius: 8px; font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: all 0.3s; }
         .btn-approve { background: var(--accent-red); color: white; }
         .btn-delete { background: #ef4444; color: white; }
+        .btn-assign-window { background: #3b82f6; color: white; }
         .file-upload-area { border: 2px dashed #e2e8f0; border-radius: 12px; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.3s; margin: 1rem 0; }
         .file-upload-area:hover { border-color: var(--accent-red); background: #fef2f2; }
         .preview-image { max-width: 200px; max-height: 100px; margin: 1rem auto; display: block; border-radius: 8px; }
@@ -503,6 +388,18 @@
         .tab-content.active { display: block; }
         .logout-btn { position: absolute; top: clamp(10px, 2vw, 20px); right: clamp(50px, 8vw, 80px); background: linear-gradient(135deg, var(--accent-red), #dc2626); color: white; border: none; padding: clamp(8px, 1.2vw, 10px) clamp(16px, 2.5vw, 20px); border-radius: 8px; font-weight: 600; cursor: pointer; font-size: clamp(0.75rem, 1.2vw, 0.85rem); display: none; z-index: 1000; }
         .logout-btn.show { display: block; }
+
+        /* ===================== WINDOW ASSIGNMENT MODAL ===================== */
+        .window-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 10002; justify-content: center; align-items: center; padding: 20px; }
+        .window-modal.active { display: flex; }
+        .window-box { background: white; padding: clamp(2rem, 4vw, 3rem); border-radius: clamp(20px, 3vw, 28px); width: 100%; max-width: 400px; box-shadow: var(--shadow-lg); }
+        .window-box h3 { margin-top: 0; color: var(--text-main); }
+        .window-box input { width: 100%; padding: 0.8rem; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 1rem; text-align: center; font-weight: 600; }
+        .window-box input:focus { border-color: var(--accent-red); outline: none; }
+        .window-modal-actions { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        .window-modal-actions button { flex: 1; padding: 0.8rem; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; transition: all 0.3s; }
+        .window-modal-actions button:first-child { background: linear-gradient(135deg, var(--accent-red), #dc2626); color: white; }
+        .window-modal-actions button:last-child { background: #e2e8f0; color: var(--text-main); }
 
         /* ===================== RESPONSIVE ===================== */
         @media (max-width: 767px) {
@@ -553,6 +450,8 @@
     <div class="modal-content">
         <h2>YOUR TICKET NUMBER</h2>
         <div class="modal-ticket" id="displayTicket">---</div>
+        <!-- NEW: window badge in kiosk modal -->
+        <div class="modal-window-badge" id="displayWindowBadge">🪟 Window ---</div>
         <div class="modal-name" id="displayName">---</div>
         <div class="modal-location" id="displayLocation">---</div>
         <p>Please take a photo of your ticket.</p>
@@ -564,14 +463,8 @@
 <div id="loginModal" class="login-modal">
     <div class="login-box">
         <h2>🔐 Staff Login</h2>
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" id="loginEmail" class="form-input" placeholder="Enter your email">
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password">
-        </div>
+        <div class="form-group"><label>Email</label><input type="email" id="loginEmail" class="form-input" placeholder="Enter your email"></div>
+        <div class="form-group"><label>Password</label><input type="password" id="loginPassword" class="form-input" placeholder="Enter your password"></div>
         <button class="btn-primary" onclick="login()">Login</button>
         <button class="btn-secondary" onclick="showRegister()">Register New Account</button>
     </div>
@@ -581,25 +474,10 @@
 <div id="registerModal" class="login-modal">
     <div class="login-box">
         <h2>📝 Register Account</h2>
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" id="regEmail" class="form-input" placeholder="Enter your email">
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" id="regPassword" class="form-input" placeholder="Enter your password">
-        </div>
-        <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" id="regName" class="form-input" placeholder="Enter your full name">
-        </div>
-        <div class="form-group">
-            <label>Department</label>
-            <select id="regDept" class="form-select">
-                <option value="REGISTRAR">Registrar</option>
-                <option value="FINANCE">Finance</option>
-            </select>
-        </div>
+        <div class="form-group"><label>Email</label><input type="email" id="regEmail" class="form-input" placeholder="Enter your email"></div>
+        <div class="form-group"><label>Password</label><input type="password" id="regPassword" class="form-input" placeholder="Enter your password"></div>
+        <div class="form-group"><label>Full Name</label><input type="text" id="regName" class="form-input" placeholder="Enter your full name"></div>
+        <div class="form-group"><label>Department</label><select id="regDept" class="form-select"><option value="REGISTRAR">Registrar</option><option value="FINANCE">Finance</option></select></div>
         <button class="btn-primary" onclick="register()">Register</button>
         <button class="btn-secondary" onclick="showLogin()">Back to Login</button>
     </div>
@@ -611,6 +489,19 @@
         <h2>👥 User Management</h2>
         <div class="user-list" id="userList"></div>
         <button class="btn-secondary" onclick="closeUserModal()">Close</button>
+    </div>
+</div>
+
+<!-- ===================== WINDOW ASSIGNMENT MODAL ===================== -->
+<div id="windowModal" class="window-modal">
+    <div class="window-box">
+        <h3>🪟 Assign Window Number</h3>
+        <p id="windowAssignUser" style="color: var(--text-muted); font-weight: 600;"></p>
+        <input type="number" id="windowInput" class="form-input" placeholder="Enter window number (e.g., 1, 2, 3)" min="1" max="99">
+        <div class="window-modal-actions">
+            <button onclick="saveWindowAssignment()">Assign</button>
+            <button onclick="closeWindowModal()">Cancel</button>
+        </div>
     </div>
 </div>
 
@@ -635,26 +526,14 @@
         </div>
         <div id="brandingTab" class="tab-content">
             <h3>Upload Logo</h3>
-            <div class="file-upload-area" onclick="document.getElementById('logoUpload').click()">
-                <p>📁 Click or drag logo image here</p>
-                <input type="file" id="logoUpload" accept="image/*" style="display:none" onchange="uploadLogo(this)">
-            </div>
+            <div class="file-upload-area" onclick="document.getElementById('logoUpload').click()"><p>📁 Click or drag logo image here</p><input type="file" id="logoUpload" accept="image/*" style="display:none" onchange="uploadLogo(this)"></div>
             <img id="logoPreview" class="preview-image" style="display:none">
-            <div class="form-group">
-                <label>Institution Name</label>
-                <input type="text" id="institutionName" class="form-input" placeholder="ARK Technological Institute">
-            </div>
-            <div class="form-group">
-                <label>Subtitle</label>
-                <input type="text" id="institutionSubtitle" class="form-input" placeholder="Education System Inc.">
-            </div>
+            <div class="form-group"><label>Institution Name</label><input type="text" id="institutionName" class="form-input" placeholder="ARK Technological Institute"></div>
+            <div class="form-group"><label>Subtitle</label><input type="text" id="institutionSubtitle" class="form-input" placeholder="Education System Inc."></div>
         </div>
         <div id="mediaTab" class="tab-content">
             <h3>Upload Screensaver Media</h3>
-            <div class="file-upload-area" onclick="document.getElementById('mediaUpload').click()">
-                <p>🎥 Click or drag video/image here</p>
-                <input type="file" id="mediaUpload" accept="video/*,image/*" style="display:none" onchange="uploadMedia(this)">
-            </div>
+            <div class="file-upload-area" onclick="document.getElementById('mediaUpload').click()"><p>🎥 Click or drag video/image here</p><input type="file" id="mediaUpload" accept="video/*,image/*" style="display:none" onchange="uploadMedia(this)"></div>
             <div id="mediaPreview"></div>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">Supported formats: MP4, WebM | JPG, PNG</p>
         </div>
@@ -723,13 +602,9 @@
                     📋 Registrar Counter
                     <span class="stats-badge" id="count-REGISTRAR">0</span>
                 </h2>
-
-                <!-- Queue Notification Banner -->
                 <div class="queue-notification-banner" id="notif-REGISTRAR">
                     <div class="bell-icon-wrap">
-                        <svg class="bell-svg" id="bell-svg-REGISTRAR" viewBox="0 0 24 24">
-                            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
-                        </svg>
+                        <svg class="bell-svg" id="bell-svg-REGISTRAR" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
                         <div class="bell-badge" id="bell-badge-REGISTRAR">0</div>
                     </div>
                     <div class="notif-text">
@@ -738,29 +613,23 @@
                     </div>
                     <button class="notif-dismiss" onclick="dismissNotif('REGISTRAR')">Dismiss</button>
                 </div>
-
-                <!-- Repeat Broadcast Toast for REGISTRAR -->
                 <div class="repeat-broadcast-toast" id="repeat-toast-REGISTRAR">
                     <span class="repeat-toast-icon">🔊</span>
-                    <div class="repeat-toast-text">
-                        Repeat call broadcast by <span class="repeat-toast-dept" id="repeat-toast-by-REGISTRAR">staff</span> — announcing on all devices
-                    </div>
+                    <div class="repeat-toast-text">Repeat call broadcast by <span class="repeat-toast-dept" id="repeat-toast-by-REGISTRAR">staff</span> — announcing on all devices</div>
                 </div>
-
-                <!-- Current Ticket with Dismiss No-Show -->
                 <div class="current-ticket-display" id="ticket-display-REGISTRAR">
                     <h3>Currently Serving</h3>
                     <div class="current-ticket-row">
-                        <div class="current-ticket-info" id="current-name-REGISTRAR">---</div>
+                        <div>
+                            <div class="current-ticket-info" id="current-name-REGISTRAR">---</div>
+                            <div class="current-window-info" id="current-window-REGISTRAR">🪟 Window ---</div>
+                        </div>
                         <button class="dismiss-no-show-btn" id="dismiss-btn-REGISTRAR" onclick="dismissNoShow('REGISTRAR')" title="Mark as no-show and clear ticket">
-                            <svg class="dismiss-icon" viewBox="0 0 24 24">
-                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                            </svg>
+                            <svg class="dismiss-icon" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
                             No-Show
                         </button>
                     </div>
                 </div>
-
                 <div class="staff-actions">
                     <button class="call-btn" style="background: linear-gradient(135deg, var(--accent-red), #dc2626)" onclick="callNext('REGISTRAR')">CALL<br>NEXT</button>
                     <button class="repeat-btn" onclick="repeatCall('REGISTRAR')">🔊 REPEAT CALL</button>
@@ -774,13 +643,9 @@
                     💰 Finance Counter
                     <span class="stats-badge" style="background: linear-gradient(135deg, var(--accent-red-light), var(--accent-red));" id="count-FINANCE">0</span>
                 </h2>
-
-                <!-- Queue Notification Banner -->
                 <div class="queue-notification-banner" id="notif-FINANCE">
                     <div class="bell-icon-wrap">
-                        <svg class="bell-svg" id="bell-svg-FINANCE" viewBox="0 0 24 24">
-                            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
-                        </svg>
+                        <svg class="bell-svg" id="bell-svg-FINANCE" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
                         <div class="bell-badge" id="bell-badge-FINANCE">0</div>
                     </div>
                     <div class="notif-text">
@@ -789,29 +654,23 @@
                     </div>
                     <button class="notif-dismiss" onclick="dismissNotif('FINANCE')">Dismiss</button>
                 </div>
-
-                <!-- Repeat Broadcast Toast for FINANCE -->
                 <div class="repeat-broadcast-toast" id="repeat-toast-FINANCE">
                     <span class="repeat-toast-icon">🔊</span>
-                    <div class="repeat-toast-text">
-                        Repeat call broadcast by <span class="repeat-toast-dept" id="repeat-toast-by-FINANCE">staff</span> — announcing on all devices
-                    </div>
+                    <div class="repeat-toast-text">Repeat call broadcast by <span class="repeat-toast-dept" id="repeat-toast-by-FINANCE">staff</span> — announcing on all devices</div>
                 </div>
-
-                <!-- Current Ticket with Dismiss No-Show -->
                 <div class="current-ticket-display" id="ticket-display-FINANCE">
                     <h3>Currently Serving</h3>
                     <div class="current-ticket-row">
-                        <div class="current-ticket-info" id="current-name-FINANCE">---</div>
+                        <div>
+                            <div class="current-ticket-info" id="current-name-FINANCE">---</div>
+                            <div class="current-window-info" id="current-window-FINANCE">🪟 Window ---</div>
+                        </div>
                         <button class="dismiss-no-show-btn" id="dismiss-btn-FINANCE" onclick="dismissNoShow('FINANCE')" title="Mark as no-show and clear ticket">
-                            <svg class="dismiss-icon" viewBox="0 0 24 24">
-                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                            </svg>
+                            <svg class="dismiss-icon" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
                             No-Show
                         </button>
                     </div>
                 </div>
-
                 <div class="staff-actions">
                     <button class="call-btn" style="background: linear-gradient(135deg, var(--accent-red-light), var(--accent-red))" onclick="callNext('FINANCE')">CALL<br>NEXT</button>
                     <button class="repeat-btn" onclick="repeatCall('FINANCE')">🔊 REPEAT CALL</button>
@@ -830,6 +689,9 @@
             <div class="announcement-indicator" id="announcement-indicator-REGISTRAR"></div>
             <div class="mon-header-label" style="color:var(--accent-red)">📋 REGISTRAR</div>
             <div class="mon-number" id="mon-num-REGISTRAR" style="color:var(--accent-red)">---</div>
+            <!-- ENHANCED: Window badge with proceed label -->
+            <div class="mon-proceed-label" id="mon-proceed-label-REGISTRAR">Please proceed to</div>
+            <div class="mon-window-badge" id="mon-window-REGISTRAR">🪟 Window ---</div>
             <div class="mon-name" id="mon-name-REGISTRAR">Welcome</div>
             <div class="mon-location" id="mon-location-REGISTRAR"></div>
             <div class="waiting-list"><h4>Next in Queue</h4><div id="next-list-REGISTRAR"></div></div>
@@ -838,6 +700,9 @@
             <div class="announcement-indicator" id="announcement-indicator-FINANCE"></div>
             <div class="mon-header-label" style="color:var(--accent-red-light)">💰 FINANCE</div>
             <div class="mon-number" id="mon-num-FINANCE" style="color:var(--accent-red-light)">---</div>
+            <!-- ENHANCED: Window badge with proceed label -->
+            <div class="mon-proceed-label" id="mon-proceed-label-FINANCE">Please proceed to</div>
+            <div class="mon-window-badge" id="mon-window-FINANCE">🪟 Window ---</div>
             <div class="mon-name" id="mon-name-FINANCE">Welcome</div>
             <div class="mon-location" id="mon-location-FINANCE"></div>
             <div class="waiting-list"><h4>Next in Queue</h4><div id="next-list-FINANCE"></div></div>
@@ -845,7 +710,6 @@
     </div>
 </div>
 
-<!-- Silent audio to unlock AudioContext on iOS/Android -->
 <audio id="silentAudio" preload="auto">
     <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=" type="audio/wav">
 </audio>
@@ -867,34 +731,23 @@ const auth = firebase.auth();
 const storage = firebase.storage();
 
 // ===================== STATE =====================
-let screensaverTimer;
 let currentActiveView = 'monitorView';
 let lastCalled = { REGISTRAR: null, FINANCE: null };
 let queueData = { REGISTRAR: {}, FINANCE: {} };
 let currentUser = null;
 let currentUserData = null;
-
+let windowAssignmentTarget = null;
 let prevQueueCount = { REGISTRAR: 0, FINANCE: 0 };
 let notifDismissed = { REGISTRAR: false, FINANCE: false };
 let activeTicket = { REGISTRAR: false, FINANCE: false };
-
 let audioUnlocked = false;
 let pendingAnnouncement = null;
-
-let announcementSettings = {
-    enabled: true, volume: 1.0, rate: 0.85, pitch: 1.0,
-    autoRepeat: true, repeatInterval: 5000
-};
+let announcementSettings = { enabled: true, volume: 1.0, rate: 0.85, pitch: 1.0, autoRepeat: true, repeatInterval: 5000 };
 let announcementInProgress = false;
 let lastAnnouncedTicket = null;
-
-// Track processed repeat call IDs to avoid double-announcement on the sender device
 let processedRepeatIds = new Set();
 
-const departmentLocations = {
-    REGISTRAR: 'Registrar Office',
-    FINANCE: 'Finance Office'
-};
+const departmentLocations = { REGISTRAR: 'Registrar Office', FINANCE: 'Finance Office' };
 
 // ===================== AUDIO UNLOCK =====================
 function showAudioUnlockOverlay() { document.getElementById('audioUnlockOverlay').classList.remove('hidden'); }
@@ -911,7 +764,7 @@ function unlockAudio() {
         window.speechSynthesis.speak(primer);
         if (pendingAnnouncement) {
             const p = pendingAnnouncement; pendingAnnouncement = null;
-            setTimeout(() => announceTicket(p.name, p.ticket, p.dept), 600);
+            setTimeout(() => announceTicket(p.name, p.ticket, p.dept, p.windowNum), 600);
         }
     }).catch(() => {
         audioUnlocked = true;
@@ -919,7 +772,7 @@ function unlockAudio() {
         updateAudioStatusBadge(true);
         if (pendingAnnouncement) {
             const p = pendingAnnouncement; pendingAnnouncement = null;
-            setTimeout(() => announceTicket(p.name, p.ticket, p.dept), 600);
+            setTimeout(() => announceTicket(p.name, p.ticket, p.dept, p.windowNum), 600);
         }
     });
 }
@@ -949,15 +802,25 @@ document.addEventListener('click', function() {
     }
 });
 
-// ===================== ANNOUNCEMENT FUNCTIONS =====================
-function announceTicket(name, ticket, dept) {
+// ===================== ANNOUNCEMENT — ENHANCED WITH WINDOW =====================
+function announceTicket(name, ticket, dept, windowNum) {
     if (!announcementSettings.enabled) return;
-    if (!audioUnlocked) { pendingAnnouncement = { name, ticket, dept }; return; }
-    if (announcementInProgress) { setTimeout(() => announceTicket(name, ticket, dept), 2000); return; }
+    if (!audioUnlocked) { pendingAnnouncement = { name, ticket, dept, windowNum }; return; }
+    if (announcementInProgress) { setTimeout(() => announceTicket(name, ticket, dept, windowNum), 2000); return; }
     window.speechSynthesis.cancel();
     announcementInProgress = true;
     const location = departmentLocations[dept] || 'the counter';
-    const msgText = `Now serving ${name}. Ticket number ${ticket}. Please proceed to the ${location}.`;
+
+    // ── ENHANCED MESSAGE ──
+    // With window:    "Now serving [Name], ticket number [X]. Please proceed to Window [N] at the [Office]."
+    // Without window: "Now serving [Name], ticket number [X]. Please proceed to the [Office]."
+    let msgText;
+    if (windowNum) {
+        msgText = `Now serving ${name}. Ticket number ${ticket}. Please proceed to Window ${windowNum} at the ${location}.`;
+    } else {
+        msgText = `Now serving ${name}. Ticket number ${ticket}. Please proceed to the ${location}.`;
+    }
+
     const msg = new SpeechSynthesisUtterance(msgText);
     msg.rate = announcementSettings.rate;
     msg.pitch = announcementSettings.pitch;
@@ -975,12 +838,12 @@ function announceTicket(name, ticket, dept) {
             updateAudioStatusBadge(false);
             if (currentActiveView === 'monitorView') {
                 showAudioUnlockOverlay();
-                pendingAnnouncement = { name, ticket, dept };
+                pendingAnnouncement = { name, ticket, dept, windowNum };
             }
         }
     };
     window.speechSynthesis.speak(msg);
-    lastAnnouncedTicket = { ticket, name, dept, time: Date.now() };
+    lastAnnouncedTicket = { ticket, name, dept, windowNum, time: Date.now() };
     updateLastAnnouncedDisplay();
 }
 
@@ -988,24 +851,22 @@ function showAnnouncementIndicator(dept) {
     const indicator = document.getElementById('announcement-indicator-' + dept);
     if (indicator) { indicator.style.display = 'block'; indicator.classList.add('announcing'); }
 }
-
 function hideAnnouncementIndicator() {
     document.querySelectorAll('[id^="announcement-indicator"]').forEach(el => {
         el.classList.remove('announcing');
         setTimeout(() => { if (!el.classList.contains('announcing')) el.style.display = 'none'; }, 500);
     });
 }
-
 function updateLastAnnouncedDisplay() {
     if (lastAnnouncedTicket) {
-        const info = `${lastAnnouncedTicket.ticket} - ${lastAnnouncedTicket.name} (${lastAnnouncedTicket.dept})`;
+        const windowText = lastAnnouncedTicket.windowNum ? ` - Window ${lastAnnouncedTicket.windowNum}` : '';
+        const info = `${lastAnnouncedTicket.ticket} - ${lastAnnouncedTicket.name} (${lastAnnouncedTicket.dept})${windowText}`;
         const status = document.getElementById('announcementStatus');
         const lastInfo = document.getElementById('lastAnnouncedInfo');
         if (status && lastInfo) { lastInfo.innerText = info; status.style.display = 'block'; }
     }
 }
-
-function testAnnouncement() { announceTicket('Juan dela Cruz', 'R001', 'REGISTRAR'); }
+function testAnnouncement() { announceTicket('Juan dela Cruz', 'R001', 'REGISTRAR', '1'); }
 
 async function loadAnnouncementSettings() {
     try {
@@ -1013,7 +874,6 @@ async function loadAnnouncementSettings() {
         if (snap.exists()) announcementSettings = { ...announcementSettings, ...snap.val() };
     } catch (e) { console.log('Load announcement settings:', e.message); }
 }
-
 async function saveAnnouncementSettings() {
     announcementSettings.enabled = document.getElementById('announcementEnabled').checked;
     announcementSettings.volume = parseInt(document.getElementById('announcementVolume').value) / 100;
@@ -1024,13 +884,48 @@ async function saveAnnouncementSettings() {
     await db.ref('settings/announcements').set(announcementSettings);
 }
 
+// ===================== MONITOR WINDOW DISPLAY HELPER =====================
+function updateMonitorWindow(dept, windowNum) {
+    const windowEl = document.getElementById('mon-window-' + dept);
+    const proceedEl = document.getElementById('mon-proceed-label-' + dept);
+    if (windowNum) {
+        if (windowEl) {
+            windowEl.innerHTML = `<span class="window-arrow">🪟</span> Window ${windowNum}`;
+            windowEl.classList.add('visible');
+        }
+        if (proceedEl) proceedEl.classList.add('visible');
+    } else {
+        if (windowEl) windowEl.classList.remove('visible');
+        if (proceedEl) proceedEl.classList.remove('visible');
+    }
+}
+
+function clearMonitorWindow(dept) {
+    const windowEl = document.getElementById('mon-window-' + dept);
+    const proceedEl = document.getElementById('mon-proceed-label-' + dept);
+    if (windowEl) windowEl.classList.remove('visible');
+    if (proceedEl) proceedEl.classList.remove('visible');
+}
+
+// Staff panel window info helper
+function updateStaffWindowInfo(dept, windowNum) {
+    const el = document.getElementById('current-window-' + dept);
+    if (!el) return;
+    if (windowNum) {
+        el.textContent = `🪟 Window ${windowNum}`;
+        el.classList.add('visible');
+    } else {
+        el.classList.remove('visible');
+    }
+}
+
 // ===================== AUTHENTICATION =====================
 async function initializeDefaultAdmin() {
     try {
         const adminSnapshot = await db.ref('users').orderByChild('email').equalTo('reymonde.silvestre@gmail.com').once('value');
         if (!adminSnapshot.exists()) {
             const adminUser = await auth.createUserWithEmailAndPassword('reymonde.silvestre@gmail.com', 'admin123');
-            await db.ref('users/' + adminUser.user.uid).set({ email: 'reymonde.silvestre@gmail.com', name: 'Administrator', role: 'admin', department: 'ALL', status: 'approved', createdAt: Date.now() });
+            await db.ref('users/' + adminUser.user.uid).set({ email: 'reymonde.silvestre@gmail.com', name: 'Administrator', role: 'admin', department: 'ALL', status: 'approved', window: null, createdAt: Date.now() });
         }
     } catch (e) { console.log('Admin init:', e.message); }
 }
@@ -1063,7 +958,7 @@ async function register() {
     if (!email || !password || !name) { alert('Please fill in all fields'); return; }
     try {
         const uc = await auth.createUserWithEmailAndPassword(email, password);
-        await db.ref('users/' + uc.user.uid).set({ email, name, role: 'staff', department: dept, status: 'pending', createdAt: Date.now() });
+        await db.ref('users/' + uc.user.uid).set({ email, name, role: 'staff', department: dept, status: 'pending', window: null, createdAt: Date.now() });
         await auth.signOut();
         alert('Registration successful! Your account is pending admin approval.');
         showLogin();
@@ -1100,13 +995,31 @@ async function showUserManagement() {
     snap.forEach(s => {
         const user = s.val(); const uid = s.key;
         const el = document.createElement('div'); el.className = 'user-item';
-        el.innerHTML = `<div class="user-info"><div class="user-email">${user.email}</div><div class="user-role">${user.role} - ${user.department}</div></div><span class="user-status status-${user.status}">${user.status}</span><div class="user-actions">${user.status === 'pending' ? `<button class="btn-small btn-approve" onclick="approveUser('${uid}')">Approve</button>` : ''}${user.role !== 'admin' ? `<button class="btn-small btn-delete" onclick="deleteUser('${uid}')">Delete</button>` : ''}</div>`;
+        const windowText = user.window ? `<div class="user-window">🪟 Window: ${user.window}</div>` : '';
+        el.innerHTML = `<div class="user-info"><div class="user-email">${user.email}</div><div class="user-role">${user.role} - ${user.department}</div>${windowText}</div><span class="user-status status-${user.status}">${user.status}</span><div class="user-actions">${user.role === 'staff' ? `<button class="btn-small btn-assign-window" onclick="openWindowAssignment('${uid}', '${user.name}')">Assign Window</button>` : ''}${user.status === 'pending' ? `<button class="btn-small btn-approve" onclick="approveUser('${uid}')">Approve</button>` : ''}${user.role !== 'admin' ? `<button class="btn-small btn-delete" onclick="deleteUser('${uid}')">Delete</button>` : ''}</div>`;
         userList.appendChild(el);
     });
 }
 async function approveUser(uid) { if (confirm('Approve this user?')) { await db.ref('users/' + uid).update({ status: 'approved' }); showUserManagement(); } }
 async function deleteUser(uid) { if (confirm('Delete this user?')) { await db.ref('users/' + uid).remove(); showUserManagement(); } }
 function closeUserModal() { document.getElementById('userModal').style.display = 'none'; }
+
+// ===================== WINDOW ASSIGNMENT =====================
+function openWindowAssignment(uid, name) {
+    windowAssignmentTarget = uid;
+    document.getElementById('windowAssignUser').innerText = `Assign window for: ${name}`;
+    document.getElementById('windowInput').value = '';
+    document.getElementById('windowModal').classList.add('active');
+}
+async function saveWindowAssignment() {
+    const windowNum = document.getElementById('windowInput').value.trim();
+    if (!windowNum) { alert('Please enter a window number'); return; }
+    if (isNaN(windowNum) || windowNum < 1) { alert('Window number must be a positive number'); return; }
+    await db.ref('users/' + windowAssignmentTarget).update({ window: parseInt(windowNum) });
+    closeWindowModal();
+    showUserManagement();
+}
+function closeWindowModal() { document.getElementById('windowModal').classList.remove('active'); windowAssignmentTarget = null; }
 
 // ===================== SETTINGS =====================
 let settingsData = { theme: 'red-black', logoUrl: 'images/logo.png', institutionName: 'ARK Technological Institute', institutionSubtitle: 'Education System Inc.', screensaverUrl: 'videos/MAKERTING2023.mp4', screensaverType: 'video' };
@@ -1148,21 +1061,17 @@ function showSettings() {
     document.getElementById('pitchValue').innerText = announcementSettings.pitch;
     document.querySelectorAll('.theme-option').forEach(o => { o.classList.remove('active'); if (o.dataset.theme === settingsData.theme) o.classList.add('active'); });
 }
-
 function closeSettings() { document.getElementById('settingsModal').style.display = 'none'; }
-
 function switchSettingsTab(tabName, evt) {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     if (evt && evt.target) evt.target.classList.add('active');
     document.getElementById(tabName + 'Tab').classList.add('active');
 }
-
 function selectTheme(themeName) {
     settingsData.theme = themeName;
     document.querySelectorAll('.theme-option').forEach(o => { o.classList.remove('active'); if (o.dataset.theme === themeName) o.classList.add('active'); });
 }
-
 function applyTheme(themeName) {
     const root = document.documentElement;
     const themes = {
@@ -1182,7 +1091,6 @@ function applyTheme(themeName) {
         document.body.style.background = theme.bodyBg;
     }
 }
-
 async function uploadLogo(input) {
     const file = input.files[0]; if (!file) return;
     const preview = document.getElementById('logoPreview');
@@ -1190,7 +1098,6 @@ async function uploadLogo(input) {
     const ref = storage.ref('logos/' + Date.now() + '_' + file.name);
     await ref.put(file); settingsData.logoUrl = await ref.getDownloadURL();
 }
-
 async function uploadMedia(input) {
     const file = input.files[0]; if (!file) return;
     const pd = document.getElementById('mediaPreview');
@@ -1200,7 +1107,6 @@ async function uploadMedia(input) {
     const ref = storage.ref('screensavers/' + Date.now() + '_' + file.name);
     await ref.put(file); settingsData.screensaverUrl = await ref.getDownloadURL();
 }
-
 async function saveSettings() {
     settingsData.institutionName = document.getElementById('institutionName').value;
     settingsData.institutionSubtitle = document.getElementById('institutionSubtitle').value;
@@ -1222,9 +1128,9 @@ function showView(id) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     document.getElementById('mainNav').classList.remove('show-menu');
-    toggleScreensaver(false);
-    clearTimeout(screensaverTimer);
     updateAudioStatusBadge(audioUnlocked);
+    if (id === 'kioskView' || id === 'monitorView') { document.body.classList.add('hide-branding'); }
+    else { document.body.classList.remove('hide-branding'); }
     if (id === 'monitorView' && !audioUnlocked) showAudioUnlockOverlay();
 }
 
@@ -1244,7 +1150,7 @@ async function resetDepartment() {
 async function resetSystem() {
     if (!currentUserData || currentUserData.role !== 'admin') return;
     if (confirm("Reset ALL ticket counts?")) {
-        await db.ref('/').update({ 'last_REGISTRAR': 0, 'last_FINANCE': 0, 'waiting_REGISTRAR': null, 'waiting_FINANCE': null, 'currentCall': { ticket: '---', name: 'Welcome', dept: 'NONE', time: 0 } });
+        await db.ref('/').update({ 'last_REGISTRAR': 0, 'last_FINANCE': 0, 'waiting_REGISTRAR': null, 'waiting_FINANCE': null, 'currentCall': { ticket: '---', name: 'Welcome', dept: 'NONE', window: null, time: 0 } });
         prevQueueCount = { REGISTRAR: 0, FINANCE: 0 };
         activeTicket = { REGISTRAR: false, FINANCE: false };
         alert('System reset successfully!');
@@ -1285,12 +1191,7 @@ function triggerQueueNotification(dept, count, latestName) {
     clearTimeout(banner._autoHide);
     banner._autoHide = setTimeout(() => { if (!notifDismissed[dept]) dismissNotif(dept); }, 8000);
 }
-
-function dismissNotif(dept) {
-    const banner = document.getElementById('notif-' + dept);
-    if (banner) banner.classList.remove('visible');
-    notifDismissed[dept] = true;
-}
+function dismissNotif(dept) { const banner = document.getElementById('notif-' + dept); if (banner) banner.classList.remove('visible'); notifDismissed[dept] = true; }
 
 // ===================== NO-SHOW DISMISS =====================
 function updateDismissBtn(dept) {
@@ -1308,16 +1209,18 @@ async function dismissNoShow(dept) {
     const currentCallSnap = await db.ref('currentCall').once('value');
     const currentCall = currentCallSnap.val();
     if (currentCall && currentCall.dept === dept) {
-        await db.ref('currentCall').set({ ticket: '---', name: 'Welcome', dept: 'NONE', time: Date.now() });
+        await db.ref('currentCall').set({ ticket: '---', name: 'Welcome', dept: 'NONE', window: null, time: Date.now() });
     }
     activeTicket[dept] = false;
     if (nameEl) nameEl.innerText = '---';
     updateDismissBtn(dept);
+    updateStaffWindowInfo(dept, null);
     lastCalled[dept] = null;
     const numEl = document.getElementById('mon-num-' + dept);
     const monNameEl = document.getElementById('mon-name-' + dept);
     const locationEl = document.getElementById('mon-location-' + dept);
     if (numEl) numEl.innerText = '---';
+    clearMonitorWindow(dept);
     if (monNameEl) monNameEl.innerText = 'Welcome';
     if (locationEl) locationEl.innerText = '';
 }
@@ -1332,16 +1235,12 @@ function playDingNotification() {
             { freq: 1568, start: 0.76, vol: 0.48 },
         ];
         chimes.forEach(({ freq, start, vol }) => {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            const osc2 = ctx.createOscillator();
-            const gain2 = ctx.createGain();
+            const osc = ctx.createOscillator(); const gain = ctx.createGain();
+            const osc2 = ctx.createOscillator(); const gain2 = ctx.createGain();
             osc.connect(gain); gain.connect(ctx.destination);
             osc2.connect(gain2); gain2.connect(ctx.destination);
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, ctx.currentTime + start);
-            osc2.type = 'triangle';
-            osc2.frequency.setValueAtTime(freq * 2.756, ctx.currentTime + start);
+            osc.type = 'sine'; osc.frequency.setValueAtTime(freq, ctx.currentTime + start);
+            osc2.type = 'triangle'; osc2.frequency.setValueAtTime(freq * 2.756, ctx.currentTime + start);
             gain.gain.setValueAtTime(0.001, ctx.currentTime + start);
             gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + start + 0.01);
             gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + 1.6);
@@ -1358,8 +1257,7 @@ function playDingNotification() {
 function playQueueArrivalSound() {
     try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
+        const osc = ctx.createOscillator(); const gain = ctx.createGain();
         osc.connect(gain); gain.connect(ctx.destination);
         osc.type = 'sine';
         osc.frequency.setValueAtTime(880, ctx.currentTime);
@@ -1367,8 +1265,7 @@ function playQueueArrivalSound() {
         gain.gain.setValueAtTime(0.001, ctx.currentTime);
         gain.gain.linearRampToValueAtTime(0.32, ctx.currentTime + 0.02);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.55);
-        osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.6);
+        osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.6);
         setTimeout(() => ctx.close(), 700);
     } catch(e) { console.log('Queue arrival sound error:', e); }
 }
@@ -1390,8 +1287,21 @@ db.ref('currentCall').on('value', (snap) => {
 
         if (numEl) numEl.innerText = data.ticket;
         if (nameEl) nameEl.innerText = data.name;
-        if (locationEl) locationEl.innerText = `Please proceed to ${departmentLocations[data.dept]}`;
+
+        // ── ENHANCED: location line depends on whether window is assigned ──
+        if (data.window) {
+            if (locationEl) locationEl.innerText = `${departmentLocations[data.dept]}`;
+        } else {
+            if (locationEl) locationEl.innerText = `Please proceed to ${departmentLocations[data.dept]}`;
+        }
+
         if (staffDisplay) staffDisplay.innerText = `${data.name} (${data.ticket})`;
+
+        // Update window badge on monitor
+        updateMonitorWindow(data.dept, data.window);
+
+        // Update window info in staff panel
+        updateStaffWindowInfo(data.dept, data.window);
 
         if (panelEl) { panelEl.classList.add('calling'); setTimeout(() => panelEl.classList.remove('calling'), 3000); }
 
@@ -1402,7 +1312,7 @@ db.ref('currentCall').on('value', (snap) => {
         if (Date.now() - data.time < 3000) {
             playDingSound();
             setTimeout(() => playBellSound(), 400);
-            setTimeout(() => announceTicket(data.name, data.ticket, data.dept), 900);
+            setTimeout(() => announceTicket(data.name, data.ticket, data.dept, data.window), 900);
         }
     } else if (data && data.dept === 'NONE') {
         ['REGISTRAR', 'FINANCE'].forEach(dept => {
@@ -1412,43 +1322,39 @@ db.ref('currentCall').on('value', (snap) => {
     }
 });
 
-// --- repeatCall listener (broadcasts repeat call to ALL devices) ---
+// --- repeatCall listener ---
 db.ref('repeatCall').on('value', (snap) => {
     const data = snap.val();
     if (!data || !data.id) return;
-
-    // Avoid processing the same repeat event twice
     if (processedRepeatIds.has(data.id)) return;
     processedRepeatIds.add(data.id);
-
-    // Only react to recent events (within 5 seconds)
     if (Date.now() - data.time > 5000) return;
 
-    const { name, ticket, dept, triggeredBy } = data;
-
-    // Show toast in staff panel
+    const { name, ticket, dept, window: windowNum, triggeredBy } = data;
     showRepeatBroadcastToast(dept, triggeredBy);
 
-    // ---- MONITOR: re-trigger all visual effects just like a fresh callNext ----
     const numEl = document.getElementById('mon-num-' + dept);
     const nameEl = document.getElementById('mon-name-' + dept);
     const locationEl = document.getElementById('mon-location-' + dept);
     const panelEl = document.getElementById('panel-' + dept);
 
-    // Ensure monitor shows the ticket (in case monitor was on a different device)
     if (numEl) numEl.innerText = ticket;
     if (nameEl) nameEl.innerText = name;
-    if (locationEl) locationEl.innerText = `Please proceed to ${departmentLocations[dept]}`;
+    if (windowNum) {
+        if (locationEl) locationEl.innerText = `${departmentLocations[dept]}`;
+    } else {
+        if (locationEl) locationEl.innerText = `Please proceed to ${departmentLocations[dept]}`;
+    }
 
-    // Re-trigger the "calling" pulse animation on the top bar
+    updateMonitorWindow(dept, windowNum);
+
     if (panelEl) {
         panelEl.classList.remove('calling');
-        void panelEl.offsetWidth; // force reflow to restart animation
+        void panelEl.offsetWidth;
         panelEl.classList.add('calling');
         setTimeout(() => panelEl.classList.remove('calling'), 4000);
     }
 
-    // Flash the ticket number so it visually "pops"
     if (numEl) {
         numEl.style.transition = 'none';
         numEl.style.transform = 'scale(1.12)';
@@ -1460,7 +1366,6 @@ db.ref('repeatCall').on('value', (snap) => {
         }, 80);
     }
 
-    // Flash amber glow on panel (repeat-specific visual cue)
     if (panelEl) {
         panelEl.classList.remove('repeat-flash');
         void panelEl.offsetWidth;
@@ -1468,22 +1373,16 @@ db.ref('repeatCall').on('value', (snap) => {
         setTimeout(() => panelEl.classList.remove('repeat-flash'), 1800);
     }
 
-    // Show announcement indicator on the monitor panel
     showAnnouncementIndicator(dept);
-
-    // Play ding + voice announcement on ALL devices
     playDingSound();
-    setTimeout(() => announceTicket(name, ticket, dept), 900);
+    setTimeout(() => announceTicket(name, ticket, dept, windowNum), 900);
 });
 
-// Show repeat broadcast toast in the staff panel
 function showRepeatBroadcastToast(dept, triggeredBy) {
     ['REGISTRAR', 'FINANCE'].forEach(d => {
         const toast = document.getElementById('repeat-toast-' + d);
         const byEl = document.getElementById('repeat-toast-by-' + d);
         if (!toast) return;
-
-        // Show toast only for the relevant dept
         if (d === dept) {
             if (byEl) byEl.textContent = triggeredBy || 'staff';
             toast.classList.add('visible');
@@ -1509,31 +1408,23 @@ function showRepeatBroadcastToast(dept, triggeredBy) {
             const row = child.val();
             queueData[dept][child.key] = row;
             count++;
-
             if (count <= 5 && monEl) {
-                const div = document.createElement('div');
-                div.className = 'waiting-row';
+                const div = document.createElement('div'); div.className = 'waiting-row';
                 const color = dept === 'REGISTRAR' ? 'var(--accent-red)' : 'var(--accent-red-light)';
                 div.innerHTML = `<span>${row.name}</span><b style="color:${color}">${row.ticket}</b>`;
                 monEl.appendChild(div);
             }
             if (queueEl) {
-                const qi = document.createElement('div');
-                qi.className = 'queue-item';
+                const qi = document.createElement('div'); qi.className = 'queue-item';
                 qi.innerHTML = `<div class="queue-item-info"><div class="queue-item-ticket">${row.ticket}</div><div class="queue-item-name">${row.name}</div></div><div style="display:flex;gap:8px;flex-shrink:0;align-items:center;"><button class="call-specific-btn" onclick="callSpecific('${dept}', '${child.key}')">Call</button><button class="delete-queue-btn" onclick="removeQueueItem(event,'${dept}','${child.key}')" title="Remove from queue"><svg class="del-icon" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></button></div>`;
                 queueEl.appendChild(qi);
             }
         });
 
-        // Newest pushed item = last in forEach
         snap.forEach(child => { latestName = child.val().name; });
-
         if (countEl) countEl.innerText = count;
         if (queueEl && count === 0) queueEl.innerHTML = '<p style="text-align:center; color: var(--text-muted); padding: 20px;">No students in queue</p>';
-
-        if (count > prevQueueCount[dept] && prevQueueCount[dept] >= 0) {
-            triggerQueueNotification(dept, count, latestName);
-        }
+        if (count > prevQueueCount[dept] && prevQueueCount[dept] >= 0) { triggerQueueNotification(dept, count, latestName); }
         prevQueueCount[dept] = count;
     });
 });
@@ -1545,7 +1436,8 @@ async function callNext(dept) {
         const key = Object.keys(snap.val())[0];
         const data = snap.val()[key];
         await db.ref('waiting_' + dept + '/' + key).remove();
-        await db.ref('currentCall').set({ ticket: data.ticket, name: data.name, dept, time: Date.now() });
+        const staffWindow = currentUserData?.window || null;
+        await db.ref('currentCall').set({ ticket: data.ticket, name: data.name, dept, window: staffWindow, time: Date.now() });
     } else { alert('No students in queue.'); }
 }
 
@@ -1554,7 +1446,8 @@ async function callSpecific(dept, key) {
     if (snap.exists()) {
         const data = snap.val();
         await db.ref('waiting_' + dept + '/' + key).remove();
-        await db.ref('currentCall').set({ ticket: data.ticket, name: data.name, dept, time: Date.now() });
+        const staffWindow = currentUserData?.window || null;
+        await db.ref('currentCall').set({ ticket: data.ticket, name: data.name, dept, window: staffWindow, time: Date.now() });
     }
 }
 
@@ -1566,30 +1459,13 @@ async function removeQueueItem(event, dept, key) {
     await db.ref('waiting_' + dept + '/' + key).remove();
 }
 
-// ===================== REPEAT CALL (ENHANCED — broadcasts to ALL devices) =====================
 async function repeatCall(dept) {
     if (!lastCalled[dept]) { alert('No ticket to repeat.'); return; }
-
     const { name, ticket } = lastCalled[dept];
     const triggeredBy = currentUserData?.name || currentUserData?.email || 'Staff';
-
-    // Write a unique repeat event to Firebase — all listening devices will pick it up
+    const staffWindow = currentUserData?.window || null;
     const repeatId = Date.now() + '_' + Math.random().toString(36).substr(2, 6);
-
-    // Pre-mark as processed so this device doesn't double-announce
-    // (it will be announced via the listener below, same as other devices)
-    // Actually we DO want this device to also announce — we just mark it so
-    // the listener handles it uniformly. So we do NOT pre-add to processedRepeatIds here.
-
-    await db.ref('repeatCall').set({
-        id: repeatId,
-        ticket,
-        name,
-        dept,
-        triggeredBy,
-        time: Date.now()
-    });
-    // The Firebase listener on 'repeatCall' handles announcement for everyone including this device.
+    await db.ref('repeatCall').set({ id: repeatId, ticket, name, dept, window: staffWindow, triggeredBy, time: Date.now() });
 }
 
 function switchDept(dept) {
@@ -1608,9 +1484,16 @@ async function generateTicket(dept, prefix) {
     const ticketID = prefix + num.toString().padStart(3, '0');
     await db.ref('last_' + dept).set(num);
     await db.ref('waiting_' + dept).push({ ticket: ticketID, name });
+
+    // ── ENHANCED: also show window in kiosk modal if a staff window is known ──
+    // (Kiosk doesn't know which window will call, so we omit window here)
     document.getElementById('displayTicket').innerText = ticketID;
     document.getElementById('displayName').innerText = name;
-    document.getElementById('displayLocation').innerText = `Please proceed to ${departmentLocations[dept]}`;
+    document.getElementById('displayLocation').innerText = `Please proceed to the ${departmentLocations[dept]}`;
+
+    const windowBadge = document.getElementById('displayWindowBadge');
+    windowBadge.classList.remove('visible'); // no window known at registration time
+
     document.getElementById('ticketModal').style.display = 'flex';
     input.value = '';
     setTimeout(closeModal, 8000);
@@ -1623,27 +1506,19 @@ window.onload = async () => {
     await initializeDefaultAdmin();
     await loadSettings();
     await loadAnnouncementSettings();
-
     if (currentActiveView === 'monitorView') {
         showAudioUnlockOverlay();
         updateAudioStatusBadge(false);
     }
-
     auth.onAuthStateChanged(async (user) => {
         if (user) {
             const ud = await db.ref('users/' + user.uid).once('value');
             if (ud.exists() && ud.val().status === 'approved') {
-                currentUser = user;
-                currentUserData = ud.val();
+                currentUser = user; currentUserData = ud.val();
                 document.getElementById('logoutBtn').classList.add('show');
                 updateUIForRole();
-            } else {
-                await auth.signOut();
-                showLogin();
-            }
-        } else {
-            showLogin();
-        }
+            } else { await auth.signOut(); showLogin(); }
+        } else { showLogin(); }
     });
 };
 </script>
