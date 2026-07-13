@@ -1334,8 +1334,8 @@ function announceTicket(name, ticket, dept, windowNum) {
     announcementInProgress = true;
     const location = departmentLocations[dept] || 'the counter';
     const msgText = windowNum
-        ? `Now serving ${name}. Ticket number ${ticket}. Please proceed to Window ${windowNum} at the ${location}.`
-        : `Now serving ${name}. Ticket number ${ticket}. Please proceed to the ${location}.`;
+        ? `Ticket number ${ticket}. Please proceed to Window ${windowNum}, ${location}.`
+        : `Ticket number ${ticket}. Please proceed to the ${location}.`;
     const msg = new SpeechSynthesisUtterance(msgText);
     msg.rate = announcementSettings.rate;
     msg.pitch = announcementSettings.pitch;
