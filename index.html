@@ -988,6 +988,7 @@ async function connectBluetoothPrinter() {
         btConnected = true;
         btReconnectAttempts = 0;
         updateBtStatus('connected');
+        startBtKeepAlive();
         return true;
 
     } catch (e) {
@@ -1008,10 +1009,12 @@ async function connectBluetoothPrinter() {
 function onBtDisconnected() {
     btConnected = false;
     bluetoothCharacteristic = null;
+    stopBtKeepAlive();
     updateBtStatus('disconnected');
 
-    // Auto-reconnect if we have the device ref and haven't exceeded retries
-    if (bluetoothDevice && btReconnectAttempts < BT_MAX_RECONNECT) {
+    // Auto-reconnect if we have the device ref, the tab is visible, and we haven't exceeded retries.
+    // No user gesture is required here because the device was already granted permission earlier.
+    if (bluetoothDevice && btReconnectAttempts < BT_MAX_RECONNECT && document.visibilityState === 'visible') {
         btReconnectAttempts++;
         console.log('BT disconnected — auto-reconnect attempt', btReconnectAttempts);
         updateBtStatus('connecting');
@@ -1024,6 +1027,7 @@ function onBtDisconnected() {
                     btConnected = true;
                     btReconnectAttempts = 0;
                     updateBtStatus('connected');
+                    startBtKeepAlive();
                 }
             } catch(e) {
                 console.warn('Auto-reconnect failed:', e.message);
@@ -1033,8 +1037,70 @@ function onBtDisconnected() {
     }
 }
 
+// Silent reconnect used when the tab regains focus/visibility after being backgrounded
+// (the most common cause of a dropped BT link on Windows/Mac laptops).
+async function reconnectBluetoothSilently() {
+    if (!bluetoothDevice || btConnected) return;
+    try {
+        updateBtStatus('connecting');
+        const server = await bluetoothDevice.gatt.connect();
+        const foundChar = await findWritableCharacteristic(server);
+        if (foundChar) {
+            bluetoothCharacteristic = foundChar;
+            btConnected = true;
+            btReconnectAttempts = 0;
+            updateBtStatus('connected');
+            startBtKeepAlive();
+        } else {
+            updateBtStatus('disconnected');
+        }
+    } catch (e) {
+        console.warn('Silent reconnect failed:', e.message);
+        updateBtStatus('disconnected');
+    }
+}
+
+// Reconnect the moment this tab/window becomes active again — covers the case where
+// opening a popup or switching windows backgrounded the tab and the OS/browser
+// silently dropped the Bluetooth GATT connection while it was inactive.
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && bluetoothDevice && !btConnected) {
+        reconnectBluetoothSilently();
+    }
+});
+window.addEventListener('focus', () => {
+    if (bluetoothDevice && !btConnected) {
+        reconnectBluetoothSilently();
+    }
+});
+
+// Keep-alive heartbeat: many ESC/POS Bluetooth printers auto-sleep/disconnect after
+// ~30-60s of inactivity. Sending a harmless re-init command periodically keeps the
+// link open between tickets.
+let btKeepAliveTimer = null;
+function startBtKeepAlive() {
+    stopBtKeepAlive();
+    btKeepAliveTimer = setInterval(async () => {
+        if (!btConnected || !bluetoothCharacteristic || !bluetoothDevice || !bluetoothDevice.gatt.connected) return;
+        try {
+            const ping = new Uint8Array(CMD.INIT);
+            if (bluetoothCharacteristic.properties.writeWithoutResponse) {
+                await bluetoothCharacteristic.writeValueWithoutResponse(ping);
+            } else {
+                await bluetoothCharacteristic.writeValue(ping);
+            }
+        } catch (e) {
+            console.warn('BT keep-alive failed:', e.message);
+        }
+    }, 25000);
+}
+function stopBtKeepAlive() {
+    if (btKeepAliveTimer) { clearInterval(btKeepAliveTimer); btKeepAliveTimer = null; }
+}
+
 async function disconnectBluetoothPrinter() {
     btReconnectAttempts = BT_MAX_RECONNECT; // prevent auto-reconnect
+    stopBtKeepAlive();
     if (bluetoothDevice && bluetoothDevice.gatt.connected) {
         bluetoothDevice.gatt.disconnect();
     }
@@ -1089,7 +1155,12 @@ async function printViaBluetooth(name, ticket, dept, windowNum, section, purpose
     return await sendToBtPrinter(data);
 }
 
-// Browser fallback print
+// Browser fallback print — uses a hidden same-page iframe instead of window.open().
+// window.open() creates a brand-new browser window, which steals focus from this tab.
+// Chrome/Edge throttle or suspend background tabs, and that is what was killing the
+// Bluetooth GATT connection every time a ticket printed or the ticket modal popped up
+// on a laptop/desktop. Printing through an invisible iframe keeps this tab foregrounded
+// the whole time, so the BT connection is never interrupted.
 function printViaBrowser(name, ticket, dept, windowNum, section, purpose) {
     const chars = printerSettings.paperWidth === 80 ? 42 : 32;
     const divider = '─'.repeat(chars);
@@ -1110,14 +1181,32 @@ function printViaBrowser(name, ticket, dept, windowNum, section, purpose) {
             <div style="font-size:9px;">${now.toLocaleDateString()} ${now.toLocaleTimeString()}</div>
             <div>${printerSettings.footerText || ''}</div>
         </div>`;
-    const w = window.open('', '', 'width=300,height=500');
-    if (!w) {
-        alert('Pop-up blocked! Please allow pop-ups for this site, then try again.');
-        return;
+
+    let printFrame = document.getElementById('hiddenPrintFrame');
+    if (!printFrame) {
+        printFrame = document.createElement('iframe');
+        printFrame.id = 'hiddenPrintFrame';
+        printFrame.style.position = 'fixed';
+        printFrame.style.right = '0';
+        printFrame.style.bottom = '0';
+        printFrame.style.width = '0';
+        printFrame.style.height = '0';
+        printFrame.style.border = '0';
+        printFrame.style.visibility = 'hidden';
+        document.body.appendChild(printFrame);
     }
-    w.document.write(`<html><body style="margin:0">${content}</body></html>`);
-    w.document.close();
-    setTimeout(() => { w.print(); w.close(); }, 300);
+    const frameDoc = printFrame.contentWindow.document;
+    frameDoc.open();
+    frameDoc.write(`<html><body style="margin:0">${content}</body></html>`);
+    frameDoc.close();
+    setTimeout(() => {
+        try {
+            printFrame.contentWindow.focus();
+            printFrame.contentWindow.print();
+        } catch(e) {
+            console.warn('Iframe print failed:', e.message);
+        }
+    }, 250);
 }
 
 async function testBtPrint() {
